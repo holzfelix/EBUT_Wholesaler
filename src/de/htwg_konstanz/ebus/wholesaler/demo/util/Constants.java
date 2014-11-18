@@ -3,7 +3,6 @@ package de.htwg_konstanz.ebus.wholesaler.demo.util;
 public class Constants {
 
     // XML schemata files
-
     public static final String XML_SCHEMA_BMECAT = "bmecat_new_catalog_1_2_simple_eps_V0.96.xsd";
     public static final String XML_SCHEMA_OPENTRANS = "openTRANS_1_0.xsd";
 
@@ -45,6 +44,9 @@ public class Constants {
     public static final String ACTION_SHOW_ORDER_LIST = "showOrderList";
     public static final String PARAM_ORDER_CUSTOMER_LIST = "orderCustomerList";
     public static final String PARAM_ORDER_PURCHASE_LIST = "orderPurchaseList";
+    /*
+     NEW CONSTANT for IMPORT XML.
+     */
     public static final String ACTION_SHOW_IMPORTJSP = "ImportXML";
 
     public static final String PARAM_LOGIN_BEAN = "loginBean";

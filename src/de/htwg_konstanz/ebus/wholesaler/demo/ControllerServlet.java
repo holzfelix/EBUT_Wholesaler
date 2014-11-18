@@ -53,7 +53,7 @@ import javax.servlet.http.HttpServletResponse;
  * <b>Example-URL:
  * http://&lt;hostname&gt;:&lt;port&gt;/controllerservlet?action=showProductList</b>
  *
-* @author tdi
+ * @author tdi
  */
 public class ControllerServlet extends HttpServlet {
 
@@ -110,7 +110,7 @@ public class ControllerServlet extends HttpServlet {
      * @param response the corresponding HTTP Response
      */
     protected void dispatchRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// create the error list (used by error.jsp to display errors)
+        // create the error list (used by error.jsp to display errors)
         // the error list is a container for any errors that occur during request processing
         errorList = new ArrayList<String>();
 
@@ -136,7 +136,7 @@ public class ControllerServlet extends HttpServlet {
             }
         }
 
-		// if the request contains no action parameter or if the action parameter is invalid,
+        // if the request contains no action parameter or if the action parameter is invalid,
         // show an error message.
         response.setContentType(CONTENT_TYPE);
         PrintWriter out = response.getWriter();
