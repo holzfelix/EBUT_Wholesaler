@@ -18,7 +18,7 @@
         <h1>XML-Import</h1>
         <div>
             <p>Plese chosse your XML-File:</p>
-            <form action="ImportXML" enctype="multipart/form-data" method="post">
+            <form action="controllerservlet?action=ImportXML" enctype="multipart/form-data" method="post">
 
                 <label>File upload</label>
                 <input type="file" name="xmlfile" id="xmlfile" />
