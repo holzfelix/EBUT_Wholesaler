@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
     <head>
-        <title>eBusiness Framework Demo - Import</title>
+        <title>eBusiness Framework Demo - Export</title>
         <meta http-equiv="cache-control" content="no-cache">
         <meta http-equiv="pragma" content="no-cache">
         <link rel="stylesheet" type="text/css" href="default.css">
@@ -15,14 +15,11 @@
         <%@ include file="authentication.jsp" %>
         <%@ include file="navigation.jspfragment" %>
 
-        <h1>XML-Import</h1>
+        <h1>XML-Export</h1>
         <div>
             <p>Plese chosse your XML-File:</p>
-            <form action="ImportXML" enctype="multipart/form-data" method="post">
+            <form action="ExoportXML" enctype="multipart/form-data" method="post">
 
-                <label>File upload</label>
-                <input type="file" name="xmlfile" id="xmlfile" />
-                <input type="submit" value="Upload" name="upload" id="upload" />
             </form>
         </div>
     </body>

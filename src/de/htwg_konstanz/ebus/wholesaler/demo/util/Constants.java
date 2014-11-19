@@ -48,6 +48,10 @@ public class Constants {
      NEW CONSTANT for IMPORT XML.
      */
     public static final String ACTION_SHOW_IMPORTJSP = "ImportXML";
+    /*
+     NEW CONSTANT for EXPORT XML.
+     */
+    public static final String ACTION_SHOW_EXPORTJSP = "ExportXML";
 
     public static final String PARAM_LOGIN_BEAN = "loginBean";
     public static final String PARAM_NAME_ORDER_ID = "orderId";
