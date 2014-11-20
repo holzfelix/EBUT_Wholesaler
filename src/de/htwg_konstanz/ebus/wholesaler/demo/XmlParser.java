@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.htwg_konstanz.ebus.wholesaler.xml;
+package de.htwg_konstanz.ebus.wholesaler.demo;
 
 /**
  *
