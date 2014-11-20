@@ -11,4 +11,8 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
  */
 public class XmlParser {
 
+    public final void validateTheXml() {
+
+    }
+
 }
