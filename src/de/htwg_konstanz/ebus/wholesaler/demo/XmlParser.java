@@ -5,14 +5,59 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo;
 
+import java.io.IOException;
+import java.io.InputStream;
+import org.xml.sax.SAXException;
+
 /**
  *
  * @author Felix
  */
-public class XmlParser {
+public final class XmlParser {
 
-    public final void validateTheXml() {
+    /**
+     * Private instanz Variable.
+     */
+    private static XmlParser instance;
 
+    /**
+     * Private Konstruktor für Singleton Pattern.
+     */
+    private XmlParser() {
+
+    }
+
+    /**
+     * Singleton get Instance.
+     *
+     * @return XmlParser
+     */
+    public static XmlParser getInstance() {
+        if (instance == null) {
+            instance = new XmlParser();
+        }
+        return instance;
+    }
+
+    /**
+     * Validates the XML.
+     *
+     * @param is InputStream
+     * @return boolean Validate Status of the XML.
+     */
+    public boolean validateTheXml(final InputStream is) throws IOException, SAXException {
+        return checkWellformness(is);
+    }
+
+    /**
+     * Checks the Wellformness of the selected XML File.
+     *
+     * @param is InputStream
+     * @return boolean
+     */
+    private boolean checkWellformness(final InputStream is) throws IOException, SAXException {
+
+        return false;
     }
 
 }

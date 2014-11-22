@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -23,16 +24,21 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class ImportXML implements IAction {
 
     /**
-     * Holt die Instanz der Upload Klasse.
+     * Gets the Instanz of the Upload class.
      */
     private final Upload upload = Upload.getInstance();
+
+    /**
+     * Gets the instace of the Xml Parser.
+     */
+    private final XmlParser xmlParser = XmlParser.getInstance();
 
     @Override
     public final String execute(final HttpServletRequest request, final HttpServletResponse response, final ArrayList<String> errorList) {
         // Input Stream which has to be parsed
         InputStream is;
 
-        // Prüfung ob das Formular Leer ist oder nicht.
+        // Check if the form was sended
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 is = upload.upload(request);
@@ -40,7 +46,11 @@ public class ImportXML implements IAction {
                 if (is == null) {
                     return "importxml.jsp?nofile=File was empty!!!!!!!";
                 }
-            } catch (FileUploadException | IOException ex) {
+
+                System.out.println(xmlParser.validateTheXml(is));
+
+                // XML File Validieeren
+            } catch (FileUploadException | IOException | SAXException ex) {
                 Logger.getLogger(ImportXML.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
