@@ -10,10 +10,13 @@
         <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
 
         <script type="text/javascript">
+            // Clientside check if a file was chosen, this starts befor the form will be send
             function checkUpload() {
                 if ($("#xmlfile").val() === "") {
+                    // Red boarder around the input field
                     $("#xmlfile").css("border", "solid 2px red");
-                    alert("No file chosen, Please first choose a File an the try uploading");
+                    // altert to inform the user that he has to choose a file
+                    alert("No file chosen, Please first choose a File an then try uploading again");
                     return false;
                 }
                 return true;
@@ -34,7 +37,6 @@
             <p>Plese chosse your XML-File:</p>
             <!-- XML - Upload Form-->
             <form action="controllerservlet?action=ImportXML" enctype="multipart/form-data" method="post" onSubmit="return checkUpload();">
-
                 <label>File upload</label>
                 <input type="file" name="xmlfile" id="xmlfile" />
                 <input type="submit" value="Upload" name="upload" id="upload" required/>
