@@ -7,6 +7,7 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,10 +30,11 @@ public class ImportXML implements IAction {
     public final String execute(final HttpServletRequest request, final HttpServletResponse response, final ArrayList<String> errorList) {
 
         try {
-            upload.upload(request);
-
-            // Renders the import page
-            return "importxml.jsp";
+            InputStream is = upload.upload(request);
+            // Server-Side check if a File was chosen.
+            if (is == null) {
+                return "importxml.jsp?nofile=File was empty!!!!!!!";
+            }
         } catch (FileUploadException | IOException ex) {
             Logger.getLogger(ImportXML.class.getName()).log(Level.SEVERE, null, ex);
         }

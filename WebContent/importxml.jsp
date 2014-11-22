@@ -1,6 +1,9 @@
 <%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<% String message = request.getParameter("nofile");%>
+
+
 <html>
     <head>
         <title>eBusiness Framework Demo - Import</title>
@@ -34,7 +37,11 @@
 
         <h1>XML-Import</h1>
         <div>
-            <p>Plese chosse your XML-File:</p>
+
+            <p>Please choose your XML-File:<br>
+                <% if (message != null) {
+                        out.write(message);
+                    }%></p>
             <!-- XML - Upload Form-->
             <form action="controllerservlet?action=ImportXML" enctype="multipart/form-data" method="post" onSubmit="return checkUpload();">
                 <label>File upload</label>

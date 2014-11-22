@@ -53,14 +53,14 @@ public final class Upload {
     }
 
     /**
-     * Epfängt das XML File.
+     * Receives the XML File and generates an InputStream.
      *
      * @param request HttpServletRequest
-     * @throws org.apache.commons.fileupload.FileUploadException Exception
-     * Handling for File Upload
-     * @throws java.io.IOException Exception Handling for IO Exceptions
+     * @return InputStream Stream of the uploaded file
+     * @throws FileUploadException Exception Handling for File Upload
+     * @throws IOException Exception Handling for IO Exceptions
      */
-    public final void upload(final HttpServletRequest request) throws FileUploadException, IOException {
+    public final InputStream upload(final HttpServletRequest request) throws FileUploadException, IOException {
         // Check Variable to check if it is a File Uploade
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
@@ -96,9 +96,15 @@ public final class Upload {
             IOUtils.copy(is, writer, "UTF-8");
             String theString = writer.toString();
 
-            System.out.println(theString);
-        }
+            System.out.println("String: " + theString);
 
+            if (theString.length() == 0) {
+                return null;
+            }
+
+            return is;
+        }
+        return null;
     }
 
 }
