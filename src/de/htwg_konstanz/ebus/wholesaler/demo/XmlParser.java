@@ -61,9 +61,10 @@ public final class XmlParser {
      * @throws SAXException Exception Handling.
      * @throws IOException Exception Handling.
      */
-    public boolean validateTheXml(final InputStream is) throws IOException, SAXException, ParserConfigurationException {
+    public org.w3c.dom.Document validateTheXml(final InputStream is) throws IOException, SAXException, ParserConfigurationException {
         org.w3c.dom.Document doc = parseXML(is);
-        return validateXML(doc);
+        validateXML(doc);
+        return doc;
     }
 
     /**
@@ -112,6 +113,7 @@ public final class XmlParser {
 
         try {
             validator.validate(new DOMSource(dom));
+            System.out.println("Your Document is valid.");
             return true;
         } catch (SAXException e) {
             System.out.println("VALIDATON ERROR");

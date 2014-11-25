@@ -36,6 +36,11 @@ public class ImportXML implements IAction {
      */
     private final XmlParser xmlParser = XmlParser.getInstance();
 
+    /**
+     * Gets the instance of the SaveProductsToDatabase Class.
+     */
+    private final SaveProductsToDatabase saveProduct = SaveProductsToDatabase.getInstance();
+
     @Override
     public final String execute(final HttpServletRequest request, final HttpServletResponse response, final ArrayList<String> errorList) {
         // get the login bean from the session
@@ -62,7 +67,10 @@ public class ImportXML implements IAction {
                             return "importxml.jsp?nofile=File was empty!!!!!!!";
                         }
 
-                        System.out.println(xmlParser.validateTheXml(is));
+                        // Returns the valid XML document
+                        org.w3c.dom.Document document = xmlParser.validateTheXml(is);
+                        // Reads the XML-File and saves the Products to the Database
+                        saveProduct.readXML(document);
 
                         // XML File Validieeren
                     } catch (FileUploadException | IOException | SAXException | ParserConfigurationException ex) {
