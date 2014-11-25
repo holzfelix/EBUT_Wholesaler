@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.xml.sax.SAXException;
@@ -64,7 +65,7 @@ public class ImportXML implements IAction {
                         System.out.println(xmlParser.validateTheXml(is));
 
                         // XML File Validieeren
-                    } catch (FileUploadException | IOException | SAXException ex) {
+                    } catch (FileUploadException | IOException | SAXException | ParserConfigurationException ex) {
                         Logger.getLogger(ImportXML.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }

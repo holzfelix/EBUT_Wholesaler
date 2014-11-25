@@ -7,7 +7,6 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -91,17 +89,15 @@ public final class Upload {
             InputStream is;
             is = element.getInputStream();
 
-            // InputStream is converted to a normal String with UTF-8 encoding
-            StringWriter writer = new StringWriter();
-            IOUtils.copy(is, writer, "UTF-8");
-            String theString = writer.toString();
-
-            System.out.println("String: " + theString);
-
-            if (theString.length() == 0) {
-                return null;
-            }
-
+//            // InputStream is converted to a normal String with UTF-8 encoding
+//            StringWriter writer = new StringWriter();
+//            IOUtils.copy(is, writer, "iso-8859-1");
+//            String theString = writer.toString();
+//
+//            System.out.println("String: " + theString);
+//            if (theString.length() == 0) {
+//                return null;
+//            }
             return is;
         }
         return null;
