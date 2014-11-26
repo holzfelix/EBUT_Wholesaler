@@ -63,8 +63,13 @@ public final class XmlParser {
      */
     public org.w3c.dom.Document validateTheXml(final InputStream is) throws IOException, SAXException, ParserConfigurationException {
         org.w3c.dom.Document doc = parseXML(is);
+        // If document couldn't be parsed return an empty doc
+        if (doc == null) {
+            return doc;
+        }
+        // if validation error return null
         if (!validateXML(doc)) {
-            doc = null;
+            return null;
         }
 
         return doc;
@@ -83,9 +88,14 @@ public final class XmlParser {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
 
-        org.w3c.dom.Document document = db.parse(is);
+        try {
+            org.w3c.dom.Document document = db.parse(is);
+            return document;
+        } catch (SAXException e) {
+            System.out.println("Dokument not Valid" + e);
+            return null;
+        }
 
-        return document;
     }
 
     /**
@@ -119,7 +129,7 @@ public final class XmlParser {
             System.out.println("Your Document is valid.");
             return true;
         } catch (SAXException e) {
-            System.out.println("VALIDATON ERROR");
+            System.out.println("VALIDATON ERROR" + e);
             return false;
         }
 
