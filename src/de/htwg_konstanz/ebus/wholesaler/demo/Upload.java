@@ -81,6 +81,7 @@ public final class Upload {
             String fileName = element.getName();
             String extension = FilenameUtils.getExtension(element.getName());
 
+            // check if file extension is xml, when not then it will be aborted
             if (!extension.equals("xml")) {
                 return null;
             }
@@ -97,15 +98,6 @@ public final class Upload {
             InputStream is;
             is = element.getInputStream();
 
-//            // InputStream is converted to a normal String with UTF-8 encoding
-//            StringWriter writer = new StringWriter();
-//            IOUtils.copy(is, writer, "iso-8859-1");
-//            String theString = writer.toString();
-//
-//            System.out.println("String: " + theString);
-//            if (theString.length() == 0) {
-//                return null;
-//            }
             return is;
         }
         return null;
