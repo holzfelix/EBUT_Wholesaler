@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -58,7 +59,7 @@ public final class Upload {
      * @throws FileUploadException Exception Handling for File Upload
      * @throws IOException Exception Handling for IO Exceptions
      */
-    public final InputStream upload(final HttpServletRequest request) throws FileUploadException, IOException {
+    public InputStream upload(final HttpServletRequest request) throws FileUploadException, IOException {
         // Check Variable to check if it is a File Uploade
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart) {
@@ -78,6 +79,13 @@ public final class Upload {
 
             FileItem element = (FileItem) iter.next();
             String fileName = element.getName();
+            String extension = FilenameUtils.getExtension(element.getName());
+
+            if (!extension.equals("xml")) {
+                return null;
+            }
+
+            System.out.println("Extension:" + extension);
 
             System.out.println("\nFilename: " + fileName);
 

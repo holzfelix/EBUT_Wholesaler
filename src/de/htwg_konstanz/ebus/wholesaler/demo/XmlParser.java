@@ -63,7 +63,10 @@ public final class XmlParser {
      */
     public org.w3c.dom.Document validateTheXml(final InputStream is) throws IOException, SAXException, ParserConfigurationException {
         org.w3c.dom.Document doc = parseXML(is);
-        validateXML(doc);
+        if (!validateXML(doc)) {
+            doc = null;
+        }
+
         return doc;
     }
 
@@ -88,7 +91,7 @@ public final class XmlParser {
     /**
      * Checks the Wellformness of the selected XML File.
      *
-     * @param is InputStream
+     * @param dom org.w3c.dom.Document
      * @return boolean
      * @throws SAXException Exception Handling.
      * @throws IOException Exception Handling.
