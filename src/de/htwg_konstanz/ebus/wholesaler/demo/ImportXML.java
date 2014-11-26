@@ -64,13 +64,13 @@ public class ImportXML implements IAction {
                         is = upload.upload(request);
                         // Server-Side check if a File was chosen or if it was an emty File
                         if (is == null) {
-                            return "importxml.jsp?nofile=File was empty!!!!!!! Or wrong file-type. only xml is allowed";
+                            return "importxml.jsp?message=File was empty!!!!!!! Or wrong file-type. only xml is allowed";
                         }
 
                         // Returns the valid XML document
                         org.w3c.dom.Document document = xmlParser.validateTheXml(is);
                         if (document == null) {
-                            return "importxml.jsp?nofile=Sorry your xml-file was not valid.";
+                            return "importxml.jsp?message=Sorry your xml-file was not valid.";
                         }
                         // Reads the XML-File and saves the Products to the Database
                         saveProduct.readXML(document);
