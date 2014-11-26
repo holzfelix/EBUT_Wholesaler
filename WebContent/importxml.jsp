@@ -1,7 +1,8 @@
 <%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<% String message = request.getParameter("message");%>
+<% String infomessage = request.getParameter("infomessage");
+    String errormessage = request.getParameter("errormessage");%>
 
 
 <html>
@@ -39,9 +40,13 @@
         <div>
 
             <p>Please choose your XML-File:<br>
-                <% if (message != null) {
-                        out.write(message);
-                    }%></p>
+                <span class="info"><% if (infomessage != null) {
+                        out.write(infomessage);
+                    }%></span>
+                <span class="error">
+                    <% if (errormessage != null) {
+                        out.write(errormessage);
+                    }%></span></p>
             <!-- XML - Upload Form-->
             <form action="controllerservlet?action=ImportXML" enctype="multipart/form-data" method="post" onSubmit="return checkUpload();">
                 <label>File upload</label>
