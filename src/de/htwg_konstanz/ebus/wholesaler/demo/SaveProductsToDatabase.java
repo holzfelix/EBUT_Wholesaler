@@ -29,6 +29,11 @@ public final class SaveProductsToDatabase {
     private static SaveProductsToDatabase instance;
 
     /**
+     * Constant für the int value 20.
+     */
+    private static final int TWENTY = 20;
+
+    /**
      * Private Konstruktor für Singleton Pattern.
      */
     private SaveProductsToDatabase() {
@@ -61,6 +66,8 @@ public final class SaveProductsToDatabase {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element eElement = (Element) node;
+
+                // Colsole out to check the values
                 System.out.println("Supplier_Aid: " + eElement.getElementsByTagName("SUPPLIER_AID").item(0).getTextContent());
                 System.out.println("DESCRIPTION_SHORT: " + eElement.getElementsByTagName("DESCRIPTION_SHORT").item(0).getTextContent());
                 System.out.println("DESCRIPTION_LONG: " + eElement.getElementsByTagName("DESCRIPTION_LONG").item(0).getTextContent());
@@ -69,6 +76,7 @@ public final class SaveProductsToDatabase {
                 System.out.println("CONTENT_UNIT: " + eElement.getElementsByTagName("CONTENT_UNIT").item(0).getTextContent());
                 System.out.println("NO_CU_PER_OU: " + eElement.getElementsByTagName("NO_CU_PER_OU").item(0).getTextContent());
 
+                // Generating a new Product
                 BOProduct product;
                 product = new BOProduct();
                 product.setLongDescription(eElement.getElementsByTagName("DESCRIPTION_LONG").item(0).getTextContent());
@@ -76,6 +84,7 @@ public final class SaveProductsToDatabase {
                 product.setShortDescription(eElement.getElementsByTagName("DESCRIPTION_SHORT").item(0).getTextContent());
                 product.setShortDescriptionCustomer(eElement.getElementsByTagName("DESCRIPTION_SHORT").item(0).getTextContent());
 
+                // persistating product
                 ProductBOA.getInstance().saveOrUpdate(product);
 
                 // Preise
@@ -85,18 +94,20 @@ public final class SaveProductsToDatabase {
                     Node preis = preise.item(z);
                     Element preisElement = (Element) preis;
 
+                    // Console out to check the values
                     System.out.println("--------- PREIS:");
-
                     System.out.println("Preis_Type: " + preisElement.getAttribute("price_type"));
                     System.out.println("PRICE_AMOUNT: " + preisElement.getElementsByTagName("PRICE_AMOUNT").item(0).getTextContent());
                     System.out.println("PRICE_CURRENCY: " + preisElement.getElementsByTagName("PRICE_CURRENCY").item(0).getTextContent());
                     System.out.println("TAX: " + preisElement.getElementsByTagName("TAX").item(0).getTextContent());
                     System.out.println("TERRITORY: " + preisElement.getElementsByTagName("TERRITORY").item(0).getTextContent());
 
+                    // Generating Sales Prcie ( Price * 20 percent)
                     String textContent = node.getTextContent();
-                    BigDecimal amount = new BigDecimal(textContent);
-                    BOSalesPrice salesPrice = new BOSalesPrice(increaseSalesPrice(amount), new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
+                    BigDecimal value = new BigDecimal(textContent);
+                    BOSalesPrice salesPrice = new BOSalesPrice(increaseSalesPrice(value), new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
 
+                    // Setting country
                     BOCountry country = null;
                     country = CountryBOA.getInstance().findCountry(textContent);
 
@@ -105,7 +116,9 @@ public final class SaveProductsToDatabase {
                     salesPrice.setLowerboundScaledprice(1);
 
                     PriceBOA.getInstance().saveOrUpdateSalesPrice(salesPrice);
-                    BOPurchasePrice purchasePrice = new BOPurchasePrice(amount, new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
+
+                    // Generating Purchase Price
+                    BOPurchasePrice purchasePrice = new BOPurchasePrice(value, new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
                     purchasePrice.setCountry(country);
                     purchasePrice.setProduct(product);
                     purchasePrice.setLowerboundScaledprice(1);
@@ -124,6 +137,6 @@ public final class SaveProductsToDatabase {
      * @return BigDecimal
      */
     private BigDecimal increaseSalesPrice(final BigDecimal amount) {
-        return amount.multiply(new BigDecimal(20));
+        return amount.multiply(new BigDecimal(TWENTY));
     }
 }
