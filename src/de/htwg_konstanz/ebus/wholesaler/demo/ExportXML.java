@@ -5,6 +5,7 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo;
 
+import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.IBOUser;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
@@ -33,7 +34,10 @@ public class ExportXML implements IAction {
             // ensure that the user is allowed to execute this action (authorization)
             // at this time the authorization is not fully implemented.
             // -> use the "Security.RESOURCE_ALL" constant which includes all resources.
-            if (Security.getInstance().isUserAllowed(loginBean.getUser(), Security.RESOURCE_ALL, Security.ACTION_READ)) {
+
+            IBOUser user = loginBean.getUser();
+
+            if (Security.getInstance().isUserAllowed(user, Security.ACTION_READ, Security.ACTION_READ)) {
                 // find all available products and put it to the session
                 List<?> productList = ProductBOA.getInstance().findAll();
                 request.getSession(true).setAttribute(PARAM_PRODUCT_LIST, productList);
