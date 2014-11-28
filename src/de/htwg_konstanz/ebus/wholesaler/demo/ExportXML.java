@@ -8,6 +8,7 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.IBOUser;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ExportProductsFromDatabase;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +23,16 @@ public class ExportXML implements IAction {
     public static final String PARAM_LOGIN_BEAN = "loginBean";
     private static final String PARAM_PRODUCT_LIST = "productList";
 
+    /**
+     * Gets the Instanz of the Upload class.
+     */
+    private final ExportProductsFromDatabase export = ExportProductsFromDatabase.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, ArrayList<String> errorList) {
+
+        String returnpath = "exportxml.jsp";
+
         // get the login bean from the session
         LoginBean loginBean = (LoginBean) request.getSession(true).getAttribute(PARAM_LOGIN_BEAN);
 
@@ -41,14 +50,20 @@ public class ExportXML implements IAction {
                 String bmecat = (String) request.getParameter("BMEcat");
                 String xhtml = (String) request.getParameter("XHTML");
 
+                // Check if an output format is chosen
                 if (!(bmecat == null && xhtml == null)) {
                     System.out.println("Start exporting");
                     System.out.println(filter);
                     System.out.println(bmecat);
+
+                    export.export(filter, bmecat, xhtml);
+                    returnpath = "exportxml.jsp?infomessage=Well done.";
+                } else {
+                    return "exportxml.jsp?errormessage=Please select at least one output format!";
                 }
 
                 // redirect to the product page
-                return "exportxml.jsp";
+                return returnpath;
             } else {
                 // authorization failed -> show error message
                 errorList.add("You are not allowed to perform this action!");

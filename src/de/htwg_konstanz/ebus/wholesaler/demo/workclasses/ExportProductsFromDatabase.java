@@ -5,6 +5,10 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
+import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
+import java.util.Collection;
+
 /**
  *
  * @author Felix
@@ -23,6 +27,8 @@ public final class ExportProductsFromDatabase {
 
     }
 
+    private Collection<BOProduct> products;
+
     /**
      * Singleton get Instance.
      *
@@ -36,6 +42,15 @@ public final class ExportProductsFromDatabase {
     }
 
     public void export(final String filter, final String bmecat, final String xhtml) {
+
+        // Checks if the whole catalogue should be exported or only selective export products
+        if (filter != null) {
+            products = ProductBOA.getInstance().findByCriteriaLike("Shortdescription", "%" + filter + "%");
+            System.out.println(products.size() + " products found");
+        } else {
+            products = ProductBOA.getInstance().findAll();
+            System.out.println(products.size() + " all products selected");
+        }
 
     }
 }
