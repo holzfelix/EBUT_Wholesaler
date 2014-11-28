@@ -7,10 +7,21 @@ package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -18,18 +29,13 @@ import org.w3c.dom.Element;
  *
  * @author Felix
  */
-public final class ExportProductsFromDatabase {
-
-    /**
-     * Private instanz Variable.
-     */
-    private static ExportProductsFromDatabase instance;
+public class ExportProductsFromDatabase {
 
     /**
      * Private Konstruktor für Singleton Pattern.
+     *
      */
-    private ExportProductsFromDatabase() {
-
+    public ExportProductsFromDatabase() {
     }
 
     /**
@@ -39,25 +45,14 @@ public final class ExportProductsFromDatabase {
     private Document doc;
 
     /**
-     * Singleton get Instance.
-     *
-     * @return XmlParser
-     */
-    public static ExportProductsFromDatabase getInstance() {
-        if (instance == null) {
-            instance = new ExportProductsFromDatabase();
-        }
-        return instance;
-    }
-
-    /**
      * Selects the Products to export.
      *
      * @param filter String
      * @param bmecat String
      * @param xhtml String
+     * @param response HttpServletResponse
      */
-    public void export(final String filter, final String bmecat, final String xhtml) {
+    public final void export(final String filter, final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
 
         // Checks if the whole catalogue should be exported or only selective export products
         if (filter != null) {
@@ -68,9 +63,19 @@ public final class ExportProductsFromDatabase {
             System.out.println(products.size() + " all products selected");
         }
 
+        exportout(bmecat, xhtml, response);
+
     }
 
-    public void exportout(final String bmecat, final String xhtml) throws ParserConfigurationException {
+    /**
+     * Generating Exportoutput.
+     *
+     * @param bmecat String.
+     * @param xhtml String.
+     * @param response HttpServletResponse response
+     * @throws ParserConfigurationException Exception Handling
+     */
+    public final void exportout(final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
         if (bmecat != null) {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -84,9 +89,14 @@ public final class ExportProductsFromDatabase {
             doc = docBuilder.newDocument();
 
         }
+
+        createDocument(response);
     }
 
-    private void createDocument() {
+    /**
+     * Creates the Document.
+     */
+    private void createDocument(final HttpServletResponse response) throws IOException, TransformerConfigurationException, TransformerException {
 
         // creating the root element and adding the Prolog and namespace
         Element root = doc.createElement("BMECAT");
@@ -119,11 +129,27 @@ public final class ExportProductsFromDatabase {
 
         supplierName.setTextContent("HTWG");
 
-        Element tNewCatalog = createTNewCatalog();
-
+        //Element tNewCatalog = createTNewCatalog();
         root.appendChild(header);
-        root.appendChild(tNewCatalog);
+        //root.appendChild(tNewCatalog);
+
         doc.appendChild(root);
+        System.out.println("");
+
+        // This should send the file to browser
+        OutputStream out = response.getOutputStream();
+
+        Result result = new StreamResult(out);
+        Source source = new DOMSource(doc);
+
+        // Write the DOM document to the file
+        Transformer xformer = TransformerFactory.newInstance().newTransformer();
+        xformer.transform(source, result);
+
+        out.close();
+
+        out.flush();
+
     }
 
     private Element createTNewCatalog() {

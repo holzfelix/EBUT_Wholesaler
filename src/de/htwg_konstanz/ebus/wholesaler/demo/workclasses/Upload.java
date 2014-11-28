@@ -28,27 +28,10 @@ public final class Upload {
     private static final int BYTE = 8192;
 
     /**
-     * Private instanz Variable.
-     */
-    private static Upload instance;
-
-    /**
      * Private Konstruktor für Singleton Pattern.
      */
-    private Upload() {
+    public Upload() {
 
-    }
-
-    /**
-     * Singleton get Instance.
-     *
-     * @return Upload
-     */
-    public static Upload getInstance() {
-        if (instance == null) {
-            instance = new Upload();
-        }
-        return instance;
     }
 
     /**

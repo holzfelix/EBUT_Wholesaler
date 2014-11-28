@@ -19,15 +19,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ExportXML implements IAction {
 
-    public static final String ACTION_SHOW_PRODUCT_LIST = "showProductList";
+    /**
+     * Constant for login bean.
+     */
     public static final String PARAM_LOGIN_BEAN = "loginBean";
-    private static final String PARAM_PRODUCT_LIST = "productList";
 
     /**
-     * Gets the Instanz of the Upload class.
+     * Exequte Servlet.
+     *
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param errorList ArrayList
+     * @return String
      */
-    private final ExportProductsFromDatabase export = ExportProductsFromDatabase.getInstance();
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response, ArrayList<String> errorList) {
 
@@ -56,9 +60,15 @@ public class ExportXML implements IAction {
                     System.out.println(filter);
                     System.out.println(bmecat);
 
-                    export.export(filter, bmecat, xhtml);
+                    // Generating Object of the Export class.
+                    ExportProductsFromDatabase export = new ExportProductsFromDatabase();
+                    export.export(filter, bmecat, xhtml, response);
+
+                    // Return message if Export works fine.
                     returnpath = "exportxml.jsp?infomessage=Well done.";
                 } else {
+
+                    // Return message with Error message
                     return "exportxml.jsp?errormessage=Please select at least one output format!";
                 }
 
