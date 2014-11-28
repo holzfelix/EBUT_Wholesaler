@@ -8,6 +8,8 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.IBOUser;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
+import de.htwg_konstanz.ebus.wholesaler.demo.IAction;
+import de.htwg_konstanz.ebus.wholesaler.demo.LoginBean;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import java.util.ArrayList;
 import java.util.List;

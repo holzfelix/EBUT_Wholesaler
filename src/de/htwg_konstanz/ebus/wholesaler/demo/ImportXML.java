@@ -5,9 +5,17 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo;
 
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.SaveProductsToDatabase;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.XmlParser;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.Upload;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
+import de.htwg_konstanz.ebus.wholesaler.demo.IAction;
+import de.htwg_konstanz.ebus.wholesaler.demo.LoginBean;
 import static de.htwg_konstanz.ebus.wholesaler.demo.ExportXML.PARAM_LOGIN_BEAN;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.SaveProductsToDatabase;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.Upload;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.XmlParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;

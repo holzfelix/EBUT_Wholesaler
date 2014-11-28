@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.htwg_konstanz.ebus.wholesaler.demo;
+package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOCountry;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
@@ -83,9 +83,8 @@ public final class SaveProductsToDatabase {
                 product.setLongDescriptionCustomer(eElement.getElementsByTagName("DESCRIPTION_LONG").item(0).getTextContent());
                 product.setShortDescription(eElement.getElementsByTagName("DESCRIPTION_SHORT").item(0).getTextContent());
                 product.setShortDescriptionCustomer(eElement.getElementsByTagName("DESCRIPTION_SHORT").item(0).getTextContent());
-
-                // persistating product
-                ProductBOA.getInstance().saveOrUpdate(product);
+                product.setOrderNumberCustomer(eElement.getElementsByTagName("SUPPLIER_AID").item(0).getTextContent());
+                product.setOrderNumberSupplier(eElement.getElementsByTagName("SUPPLIER_AID").item(0).getTextContent());
 
                 // Preise
                 NodeList preise = eElement.getElementsByTagName("ARTICLE_PRICE");
@@ -103,13 +102,12 @@ public final class SaveProductsToDatabase {
                     System.out.println("TERRITORY: " + preisElement.getElementsByTagName("TERRITORY").item(0).getTextContent());
 
                     // Generating Sales Prcie ( Price * 20 percent)
-                    String textContent = node.getTextContent();
-                    BigDecimal value = new BigDecimal(textContent);
-                    BOSalesPrice salesPrice = new BOSalesPrice(increaseSalesPrice(value), new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
+                    BigDecimal amount = new BigDecimal(preisElement.getElementsByTagName("PRICE_AMOUNT").item(0).getTextContent());
+                    BOSalesPrice salesPrice = new BOSalesPrice(increaseSalesPrice(amount), new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
 
                     // Setting country
                     BOCountry country = null;
-                    country = CountryBOA.getInstance().findCountry(textContent);
+                    country = CountryBOA.getInstance().findCountry(preisElement.getElementsByTagName("TERRITORY").item(0).getTextContent());
 
                     salesPrice.setCountry(country);
                     salesPrice.setProduct(product);
@@ -118,13 +116,17 @@ public final class SaveProductsToDatabase {
                     PriceBOA.getInstance().saveOrUpdateSalesPrice(salesPrice);
 
                     // Generating Purchase Price
-                    BOPurchasePrice purchasePrice = new BOPurchasePrice(value, new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
+                    BOPurchasePrice purchasePrice = new BOPurchasePrice(amount, new BigDecimal(preisElement.getElementsByTagName("TAX").item(0).getTextContent()), preisElement.getAttribute("price_type"));
                     purchasePrice.setCountry(country);
                     purchasePrice.setProduct(product);
                     purchasePrice.setLowerboundScaledprice(1);
                     PriceBOA.getInstance().saveOrUpdatePurchasePrice(purchasePrice);
 
                 }
+
+                // persistating product
+                ProductBOA.getInstance().saveOrUpdate(product);
+
             }
         }
 
