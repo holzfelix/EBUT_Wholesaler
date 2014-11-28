@@ -9,6 +9,33 @@ package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
  *
  * @author Felix
  */
-public class ExportProductsFromDatabase {
+public final class ExportProductsFromDatabase {
 
+    /**
+     * Private instanz Variable.
+     */
+    private static ExportProductsFromDatabase instance;
+
+    /**
+     * Private Konstruktor für Singleton Pattern.
+     */
+    private ExportProductsFromDatabase() {
+
+    }
+
+    /**
+     * Singleton get Instance.
+     *
+     * @return XmlParser
+     */
+    public static ExportProductsFromDatabase getInstance() {
+        if (instance == null) {
+            instance = new ExportProductsFromDatabase();
+        }
+        return instance;
+    }
+
+    public void export(final String filter, final String bmecat, final String xhtml) {
+
+    }
 }

@@ -18,12 +18,14 @@
         <%@ include file="navigation.jspfragment" %>
 
         <h1>XML-Export</h1>
-        <p>Please select one or more Products to export.</p>
-        <div>
-            <form action="ExoportXML" enctype="multipart/form-data" method="post">
-                <input type="text" name="substring" id="substring" />
-                <input type="submit" name="submit" />
 
+        <div>
+            <form action="controllerservlet?action=ExportXML" method="post">
+                <p>Enter a Short-Description to export. (optional) If no Short-Description is given, the whole catalogue will be exported.</p>
+                Short Description: <input type="text" name="substring" id="substring" /><br>
+                BMEcat: <input type="checkbox" name="BMEcat" id="BMEcat" /><br>
+                XHTML: <input type="checkbox" name="XHTML" id="XHTML" /><br><br>
+                <input type="submit" name="submit" value="Abrufen" />
             </form>
         </div>
     </body>

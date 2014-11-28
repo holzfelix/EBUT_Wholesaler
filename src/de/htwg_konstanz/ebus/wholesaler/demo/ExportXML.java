@@ -6,13 +6,9 @@
 package de.htwg_konstanz.ebus.wholesaler.demo;
 
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.IBOUser;
-import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
-import de.htwg_konstanz.ebus.wholesaler.demo.IAction;
-import de.htwg_konstanz.ebus.wholesaler.demo.LoginBean;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -40,9 +36,16 @@ public class ExportXML implements IAction {
             IBOUser user = loginBean.getUser();
 
             if (Security.getInstance().isUserAllowed(user, Security.ACTION_READ, Security.ACTION_READ)) {
-                // find all available products and put it to the session
-                List<?> productList = ProductBOA.getInstance().findAll();
-                request.getSession(true).setAttribute(PARAM_PRODUCT_LIST, productList);
+
+                String filter = (String) request.getParameter("substring");
+                String bmecat = (String) request.getParameter("BMEcat");
+                String xhtml = (String) request.getParameter("XHTML");
+
+                if (!(bmecat == null && xhtml == null)) {
+                    System.out.println("Start exporting");
+                    System.out.println(filter);
+                    System.out.println(bmecat);
+                }
 
                 // redirect to the product page
                 return "exportxml.jsp";
