@@ -194,7 +194,15 @@ public class ExportProductsFromDatabase {
             articleDetails.appendChild(descriptionLong);
 
             Element ean = doc.createElement("EAN");
-            descriptionLong.setTextContent(product.getOrderNumberCustomer());
+            // Not nice but has to be done to get a valid schema!
+            // If EAN is longer than 14 characters it will be trimmed
+            if (product.getOrderNumberCustomer().length() > 14) {
+                String s = product.getOrderNumberCustomer().trim().substring(0, 14);
+                ean.setTextContent(s);
+            } else {
+                ean.setTextContent(product.getOrderNumberCustomer());
+            }
+
             articleDetails.appendChild(ean);
 
             article.appendChild(articleDetails);
@@ -203,7 +211,7 @@ public class ExportProductsFromDatabase {
             // Article Order Details
             Element articleOrderDetails = doc.createElement("ARTICLE_ORDER_DETAILS");
             Element orderUnit = doc.createElement("ORDER_UNIT");
-            Element noCuPerOu = doc.createElement("NO_CU_PER_OUT");
+            Element noCuPerOu = doc.createElement("NO_CU_PER_OU");
             orderUnit.setTextContent("C62");
             noCuPerOu.setTextContent("1");
             articleOrderDetails.appendChild(orderUnit);
@@ -226,6 +234,8 @@ public class ExportProductsFromDatabase {
                 articlePrice.appendChild(currency);
                 articlePrice.appendChild(tax);
                 articlePrice.appendChild(priceTerritory);
+
+                articlePrice.setAttribute("price_type", salesPrice.getPricetype());
 
                 priceAmount.setTextContent(salesPrice.getAmount().toString());
                 currency.setTextContent(salesPrice.getCountry().getCurrency().getCode());
