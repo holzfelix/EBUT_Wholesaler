@@ -9,9 +9,14 @@ import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.IBOUser;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ExportProductsFromDatabase;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 /**
  *
@@ -33,7 +38,7 @@ public class ExportXML implements IAction {
      * @return String
      */
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response, ArrayList<String> errorList) {
+    public final String execute(HttpServletRequest request, HttpServletResponse response, ArrayList<String> errorList) {
 
         String returnpath = "exportxml.jsp";
 
@@ -56,16 +61,20 @@ public class ExportXML implements IAction {
 
                 // Check if an output format is chosen
                 if (!(bmecat == null && xhtml == null)) {
-                    System.out.println("Start exporting");
-                    System.out.println(filter);
-                    System.out.println(bmecat);
+                    try {
+                        System.out.println("Start exporting");
+                        System.out.println(filter);
+                        System.out.println(bmecat);
 
-                    // Generating Object of the Export class.
-                    ExportProductsFromDatabase export = new ExportProductsFromDatabase();
-                    export.export(filter, bmecat, xhtml, response);
+                        // Generating Object of the Export class.
+                        ExportProductsFromDatabase export = new ExportProductsFromDatabase();
+                        export.export(filter, bmecat, xhtml, response);
 
-                    // Return message if Export works fine.
-                    returnpath = "exportxml.jsp?infomessage=Well done.";
+                        // Return message if Export works fine.
+                        returnpath = "exportxml.jsp?infomessage=Well done.";
+                    } catch (ParserConfigurationException | IOException | TransformerException ex) {
+                        Logger.getLogger(ExportXML.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
 
                     // Return message with Error message

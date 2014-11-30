@@ -48,6 +48,7 @@ public class ExportProductsFromDatabase {
      * Generated XMLdocument.
      */
     private Document doc;
+    private Document docXHTML;
 
     /**
      * Selects the Products to export.
@@ -83,21 +84,21 @@ public class ExportProductsFromDatabase {
      * @throws javax.xml.transform.TransformerException Exception Handling
      */
     public final void exportout(final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
-        if (bmecat != null) {
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            doc = docBuilder.newDocument();
-        }
 
-        if (xhtml != null) {
-
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            doc = docBuilder.newDocument();
-
-        }
+        // Generating the BMECat document
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+        doc = docBuilder.newDocument();
 
         createDocument(response);
+
+        if (xhtml != null) {
+            DocumentBuilderFactory docFactoryXHTML = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilderXHTML = docFactoryXHTML.newDocumentBuilder();
+            docXHTML = docBuilderXHTML.newDocument();
+            createXHTML();
+        }
+
     }
 
     /**
@@ -145,7 +146,6 @@ public class ExportProductsFromDatabase {
         root.appendChild(tNewCatalog);
 
         doc.appendChild(root);
-        System.out.println("");
 
         // This should send the file to browser
         OutputStream out = response.getOutputStream();
@@ -163,7 +163,7 @@ public class ExportProductsFromDatabase {
     }
 
     /**
-     * Generets the Katalog (all above the T_New_Catalog tag)
+     * Generets the Katalog (all above the T_New_Catalog tag).
      *
      * @return Element
      */
@@ -252,6 +252,14 @@ public class ExportProductsFromDatabase {
         }
 
         return tNewCatalog;
+    }
+
+    /**
+     * Generating the XHTML document.
+     */
+    private void createXHTML() {
+        System.out.println("The BMECat will be transformed into an XHTML document");
+
     }
 
 }
