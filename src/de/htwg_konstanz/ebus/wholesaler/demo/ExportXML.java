@@ -10,6 +10,7 @@ import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ExportProductsFromDatabase;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,8 @@ public class ExportXML implements IAction {
 
             if (Security.getInstance().isUserAllowed(user, Security.ACTION_READ, Security.ACTION_READ)) {
 
+                response.setHeader("Content-Disposition", "attachment;filename=catalog.xml");
+
                 String filter = (String) request.getParameter("substring");
                 String bmecat = (String) request.getParameter("BMEcat");
                 String xhtml = (String) request.getParameter("XHTML");
@@ -68,7 +71,7 @@ public class ExportXML implements IAction {
 
                         // Generating Object of the Export class.
                         ExportProductsFromDatabase export = new ExportProductsFromDatabase();
-                        export.export(filter, bmecat, xhtml, response);
+                        OutputStream out = export.export(filter, bmecat, xhtml, response);
 
                         // Return message if Export works fine.
                         returnpath = "exportxml.jsp?infomessage=Well done.";

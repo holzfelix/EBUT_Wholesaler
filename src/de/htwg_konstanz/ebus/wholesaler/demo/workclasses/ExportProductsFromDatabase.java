@@ -10,7 +10,12 @@ import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSalesPrice;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.PriceBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +25,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -58,7 +65,7 @@ public class ExportProductsFromDatabase {
      * @param xhtml String
      * @param response HttpServletResponse
      */
-    public final void export(final String filter, final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
+    public final OutputStream export(final String filter, final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
 
         // Checks if the whole catalogue should be exported or only selective export products
         if (filter != null) {
@@ -69,7 +76,7 @@ public class ExportProductsFromDatabase {
             System.out.println(products.size() + " all products selected");
         }
 
-        exportout(bmecat, xhtml, response);
+        return exportout(bmecat, xhtml, response);
 
     }
 
@@ -79,25 +86,28 @@ public class ExportProductsFromDatabase {
      * @param bmecat String.
      * @param xhtml String.
      * @param response HttpServletResponse response
+     * @return OutputStream
      * @throws ParserConfigurationException Exception Handling
      * @throws java.io.IOException Exception Handling
      * @throws javax.xml.transform.TransformerException Exception Handling
      */
-    public final void exportout(final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
+    public final OutputStream exportout(final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
 
         // Generating the BMECat document
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         doc = docBuilder.newDocument();
 
-        createDocument(response);
+        OutputStream out = createDocument(response);
 
         if (xhtml != null) {
             DocumentBuilderFactory docFactoryXHTML = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilderXHTML = docFactoryXHTML.newDocumentBuilder();
             docXHTML = docBuilderXHTML.newDocument();
-            createXHTML();
+            out = createXHTML(response);
         }
+
+        return out;
 
     }
 
@@ -108,7 +118,7 @@ public class ExportProductsFromDatabase {
      * @throws IOException Exception Handling
      * @throws TransformerException Exception Handling
      */
-    private void createDocument(final HttpServletResponse response) throws IOException, TransformerException {
+    private OutputStream createDocument(final HttpServletResponse response) throws IOException, TransformerException {
 
         // creating the root element and adding the Prolog and namespace
         Element root = doc.createElement("BMECAT");
@@ -158,7 +168,7 @@ public class ExportProductsFromDatabase {
         xformer.transform(source, result);
 
         out.close();
-        out.flush();
+        return out;
 
     }
 
@@ -257,8 +267,22 @@ public class ExportProductsFromDatabase {
     /**
      * Generating the XHTML document.
      */
-    private void createXHTML() {
+    private OutputStream createXHTML(final HttpServletResponse response) throws MalformedURLException, IOException, TransformerConfigurationException, TransformerException {
         System.out.println("The BMECat will be transformed into an XHTML document");
+        // Gets the URL of the Shema file
+        URL url = new URL("http://localhost:8084/EBUT_Wholesaler/temp/Transformation_XHTML.xsl");
+
+        // establish connection to Schema File
+        URLConnection uc = url.openConnection();
+        InputStreamReader input = new InputStreamReader(uc.getInputStream());
+        OutputStream output = response.getOutputStream();
+        Result result = new StreamResult(output);
+
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer(new StreamSource(input));
+        transformer.transform(new StreamSource((InputStream) doc), result);
+
+        return output;
 
     }
 
