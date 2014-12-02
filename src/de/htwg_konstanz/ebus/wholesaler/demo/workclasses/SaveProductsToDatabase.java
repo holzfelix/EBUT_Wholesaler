@@ -5,13 +5,11 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
-import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOAddress;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOCountry;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOPurchasePrice;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSalesPrice;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSupplier;
-import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.AddressBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.CountryBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.PriceBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
@@ -62,16 +60,20 @@ public final class SaveProductsToDatabase {
      *
      * @param xmlFile org.w3c.dom.Document
      */
-    public void readXML(final org.w3c.dom.Document xmlFile) {
+    public ReportDTO readXML(final org.w3c.dom.Document xmlFile) {
         NodeList nodes = xmlFile.getElementsByTagName("ARTICLE");
         NodeList SupplierNodes = xmlFile.getElementsByTagName("SUPPLIER");
         Node nodeSup = SupplierNodes.item(0);
         Element supplierName = (Element) nodeSup;
 
+        int productCounter = 0;
+
         for (int temp = 0; temp < nodes.getLength(); temp++) {
             Node node = nodes.item(temp);
             System.out.println("\nCurrent Element :" + node.getNodeName());
             if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                productCounter++;
 
                 Element eElement = (Element) node;
 
@@ -105,29 +107,7 @@ public final class SaveProductsToDatabase {
 
                 // if not found create a new Supplier
                 if (supllierlist.isEmpty()) {
-                    BOAddress address = new BOAddress();
-                    address.setCity("Singen");
-                    address.setStreet("TEST");
-                    address.setZipcode("77777");
-
-                    CountryBOA countryboa = CountryBOA.getInstance();
-                    address.setCountry(countryboa.findCountry("DE"));
-                    address.setId("88");
-
-                    AddressBOA addressboa = AddressBOA.getInstance();
-                    addressboa.saveOrUpdate(address);
-
-                    supplier.setCompanyname(foundSupplierName);
-                    supplier.setFirstname("HANS");
-                    supplier.setLastname("MÜLLER");
-                    supplier.setRemark("TTT");
-                    supplier.setSupplierNumber("88888");
-                    supplier.setWsUserName("hansmueller");
-                    supplier.setWsPassword("123456");
-                    supplier.setWsCatalogEndpoint("http://localhost:8080/ess/ProductCatalogService");
-                    supplier.setWsOrderEndpoint("http://localhost:8080/ess/OrderService");
-                    supplier.setAddress(address);
-                    foundSuppliers.saveOrUpdate(supplier);
+                    return new ReportDTO(false, "Sorry Supplier not found in Database. Please insert supplier first manually and try again!");
                 } else {
                     supplier = (BOSupplier) supllierlist.get(0);
                 }
@@ -177,7 +157,7 @@ public final class SaveProductsToDatabase {
 
             }
         }
-
+        return new ReportDTO(true, "All " + productCounter + " poducts successfully imported.");
     }
 
     /**

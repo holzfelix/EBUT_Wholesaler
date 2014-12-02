@@ -8,6 +8,7 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import static de.htwg_konstanz.ebus.wholesaler.demo.ExportXML.PARAM_LOGIN_BEAN;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ReportDTO;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.SaveProductsToDatabase;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.Upload;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.XmlParser;
@@ -76,8 +77,13 @@ public class ImportXML implements IAction {
                             return "importxml.jsp?errormessage=Sorry your xml-file was not valid.";
                         }
                         // Reads the XML-File and saves the Products to the Database
-                        saveProduct.readXML(document);
-                        return "importxml.jsp?infomessage=Products were successfully imported to database.";
+                        ReportDTO returnval = saveProduct.readXML(document);
+
+                        if (returnval.getType()) {
+                            return "importxml.jsp?infomessage=" + returnval.getMessage();
+                        } else {
+                            return "importxml.jsp?errormessage=" + returnval.getMessage();
+                        }
                         // XML File Validieeren
                     } catch (FileUploadException | IOException | SAXException | ParserConfigurationException ex) {
                         Logger.getLogger(ImportXML.class.getName()).log(Level.SEVERE, null, ex);
