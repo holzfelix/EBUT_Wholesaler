@@ -125,6 +125,7 @@ public class ExportProductsFromDatabase {
         root.setAttribute("version", "1.2");
         root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
+        // Crate elements
         Element header = doc.createElement("HEADER");
         Element catalog = doc.createElement("CATALOG");
         Element supplier = doc.createElement("SUPPLIER");
@@ -178,8 +179,10 @@ public class ExportProductsFromDatabase {
      * @return Element
      */
     private Element createTNewCatalog() {
+        //create new catalog
         Element tNewCatalog = doc.createElement("T_NEW_CATALOG");
         for (BOProduct product : products) {
+            // create new article
             Element article = doc.createElement("ARTICLE");
 
             // Gets the Supplier aid
@@ -227,6 +230,7 @@ public class ExportProductsFromDatabase {
             articleOrderDetails.appendChild(orderUnit);
             articleOrderDetails.appendChild(noCuPerOu);
 
+            // add the orderdetails to the article
             article.appendChild(articleOrderDetails);
 
             // -----------------------------------------------------------------
@@ -234,31 +238,37 @@ public class ExportProductsFromDatabase {
             List<BOSalesPrice> salesPrices = PriceBOA.getInstance().findSalesPrices(product);
             Element priceDetails = doc.createElement("ARTICLE_PRICE_DETAILS");
             for (BOSalesPrice salesPrice : salesPrices) {
+
+                // Create Price elements
                 Element articlePrice = doc.createElement("ARTICLE_PRICE");
                 Element priceAmount = doc.createElement("PRICE_AMOUNT");
                 Element currency = doc.createElement("PRICE_CURRENCY");
                 Element tax = doc.createElement("TAX");
                 Element priceTerritory = doc.createElement("TERRITORY");
 
+                // Add the elements to the article prcie
                 articlePrice.appendChild(priceAmount);
                 articlePrice.appendChild(currency);
                 articlePrice.appendChild(tax);
                 articlePrice.appendChild(priceTerritory);
 
+                // set the Price Type
                 articlePrice.setAttribute("price_type", salesPrice.getPricetype());
 
+                // Set the values of the elements
                 priceAmount.setTextContent(salesPrice.getAmount().toString());
                 currency.setTextContent(salesPrice.getCountry().getCurrency().getCode());
                 tax.setTextContent(salesPrice.getTaxrate().toString());
                 priceTerritory.setTextContent(salesPrice.getCountry().getIsocode());
 
+                // add Price to the element Price details
                 priceDetails.appendChild(articlePrice);
 
             }
+            // add all Prices to the Article
             article.appendChild(priceDetails);
-
+            // add the article to the catalog
             tNewCatalog.appendChild(article);
-
         }
 
         return tNewCatalog;
@@ -283,7 +293,5 @@ public class ExportProductsFromDatabase {
         transformer.transform(new StreamSource((InputStream) doc), result);
 
         return output;
-
     }
-
 }

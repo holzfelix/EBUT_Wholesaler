@@ -5,14 +5,19 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
+import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOAddress;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOCountry;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOPurchasePrice;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSalesPrice;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSupplier;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.AddressBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.CountryBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.PriceBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.SupplierBOA;
 import java.math.BigDecimal;
+import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,6 +64,9 @@ public final class SaveProductsToDatabase {
      */
     public void readXML(final org.w3c.dom.Document xmlFile) {
         NodeList nodes = xmlFile.getElementsByTagName("ARTICLE");
+        NodeList SupplierNodes = xmlFile.getElementsByTagName("SUPPLIER");
+        Node nodeSup = SupplierNodes.item(0);
+        Element supplierName = (Element) nodeSup;
 
         for (int temp = 0; temp < nodes.getLength(); temp++) {
             Node node = nodes.item(temp);
@@ -85,6 +93,49 @@ public final class SaveProductsToDatabase {
                 product.setShortDescriptionCustomer(eElement.getElementsByTagName("DESCRIPTION_SHORT").item(0).getTextContent());
                 product.setOrderNumberCustomer(eElement.getElementsByTagName("SUPPLIER_AID").item(0).getTextContent());
                 product.setOrderNumberSupplier(eElement.getElementsByTagName("SUPPLIER_AID").item(0).getTextContent());
+
+                // Read suppliername form XML
+                String foundSupplierName = supplierName.getElementsByTagName("SUPPLIER_NAME").item(0).getTextContent();
+                System.out.println("SupplierName: " + foundSupplierName);
+
+                SupplierBOA foundSuppliers = SupplierBOA.getInstance();
+                BOSupplier supplier = new BOSupplier();
+                // Search supplier
+                List supllierlist = foundSuppliers.findByCompanyName(foundSupplierName);
+
+                // if not found create a new Supplier
+                if (supllierlist.isEmpty()) {
+                    BOAddress address = new BOAddress();
+                    address.setCity("Singen");
+                    address.setStreet("TEST");
+                    address.setZipcode("77777");
+
+                    CountryBOA countryboa = CountryBOA.getInstance();
+                    address.setCountry(countryboa.findCountry("DE"));
+                    address.setId("88");
+
+                    AddressBOA addressboa = AddressBOA.getInstance();
+                    addressboa.saveOrUpdate(address);
+
+                    supplier.setCompanyname(foundSupplierName);
+                    supplier.setFirstname("HANS");
+                    supplier.setLastname("MÜLLER");
+                    supplier.setRemark("TTT");
+                    supplier.setSupplierNumber("88888");
+                    supplier.setWsUserName("hansmueller");
+                    supplier.setWsPassword("123456");
+                    supplier.setWsCatalogEndpoint("http://localhost:8080/ess/ProductCatalogService");
+                    supplier.setWsOrderEndpoint("http://localhost:8080/ess/OrderService");
+                    supplier.setAddress(address);
+                    foundSuppliers.saveOrUpdate(supplier);
+                } else {
+                    supplier = (BOSupplier) supllierlist.get(0);
+                }
+                // Set supplier for product
+                product.setSupplier(supplier);
+
+                // persistating product
+                ProductBOA.getInstance().saveOrUpdate(product);
 
                 // Preise
                 NodeList preise = eElement.getElementsByTagName("ARTICLE_PRICE");
@@ -123,9 +174,6 @@ public final class SaveProductsToDatabase {
                     PriceBOA.getInstance().saveOrUpdatePurchasePrice(purchasePrice);
 
                 }
-
-                // persistating product
-                ProductBOA.getInstance().saveOrUpdate(product);
 
             }
         }
