@@ -34,9 +34,9 @@
         <div>
             <form action="controllerservlet?action=ExportXML" method="post">
                 <p>Enter a Short-Description to export. (optional) If no Short-Description is given, the whole catalogue will be exported.</p>
-                Short Description: <input type="text" name="substring" id="substring" /><br>
-                BMEcat: <input type="checkbox" name="BMEcat" id="BMEcat" /><br>
-                XHTML: <input type="checkbox" name="XHTML" id="XHTML" /><br><br>
+                Short Description: <input type="text" name="substring" id="substring" /><br><br>
+                BMEcat: <input type="radio" name="exportType" value="BMEcat"><br>
+                XHTML: <input type="radio" name="exportType" value="XHTML"><br><br>
                 <input type="submit" name="submit" value="Abrufen" />
             </form>
         </div>

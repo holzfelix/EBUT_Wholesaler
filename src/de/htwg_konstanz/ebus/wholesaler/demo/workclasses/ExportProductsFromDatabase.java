@@ -9,6 +9,8 @@ import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSalesPrice;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.PriceBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -55,17 +58,19 @@ public class ExportProductsFromDatabase {
      * Generated XMLdocument.
      */
     private Document doc;
-    private Document docXHTML;
 
     /**
      * Selects the Products to export.
      *
      * @param filter String
-     * @param bmecat String
-     * @param xhtml String
+     * @param exportType String
      * @param response HttpServletResponse
+     * @return ReportDTO
+     * @throws javax.xml.parsers.ParserConfigurationException Exception Handling
+     * @throws java.io.IOException Exception Handling
+     * @throws javax.xml.transform.TransformerException Exception Handling
      */
-    public final OutputStream export(final String filter, final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
+    public final ReportDTO export(final String filter, final String exportType, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
 
         // Checks if the whole catalogue should be exported or only selective export products
         if (filter != null) {
@@ -75,40 +80,49 @@ public class ExportProductsFromDatabase {
             products = ProductBOA.getInstance().findAll();
             System.out.println(products.size() + " all products selected");
         }
+        ReportDTO returnMessage = new ReportDTO(true, "Export successfully done.");
+        returnMessage.setExport(exportout(exportType, response));
 
-        return exportout(bmecat, xhtml, response);
-
+        return returnMessage;
     }
 
     /**
      * Generating Exportoutput.
      *
-     * @param bmecat String.
-     * @param xhtml String.
+     * @param exportType String.
      * @param response HttpServletResponse response
      * @return OutputStream
      * @throws ParserConfigurationException Exception Handling
      * @throws java.io.IOException Exception Handling
      * @throws javax.xml.transform.TransformerException Exception Handling
      */
-    public final OutputStream exportout(final String bmecat, final String xhtml, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
+    public final OutputStream exportout(final String exportType, final HttpServletResponse response) throws ParserConfigurationException, IOException, TransformerException {
 
         // Generating the BMECat document
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         doc = docBuilder.newDocument();
 
-        OutputStream out = createDocument(response);
+        // This should send the file to browser
+        OutputStream out = response.getOutputStream();
 
-        if (xhtml != null) {
-            DocumentBuilderFactory docFactoryXHTML = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilderXHTML = docFactoryXHTML.newDocumentBuilder();
-            docXHTML = docBuilderXHTML.newDocument();
+        // Gen BMECAT
+        createDocument(response);
+
+        if (exportType.equals("XHTML")) {
+            System.out.println("Generating XHTML");
             out = createXHTML(response);
+        } else {
+            // Generating Result .. output steam
+            Result result = new StreamResult(out);
+            Source source = new DOMSource(doc);
+            // Write the DOM document to the file in this case to the outputstream
+            Transformer xformer = TransformerFactory.newInstance().newTransformer();
+            xformer.transform(source, result);
+            out.close();
+            return out;
         }
-
         return out;
-
     }
 
     /**
@@ -118,7 +132,7 @@ public class ExportProductsFromDatabase {
      * @throws IOException Exception Handling
      * @throws TransformerException Exception Handling
      */
-    private OutputStream createDocument(final HttpServletResponse response) throws IOException, TransformerException {
+    private void createDocument(final HttpServletResponse response) throws IOException, TransformerException {
 
         // creating the root element and adding the Prolog and namespace
         Element root = doc.createElement("BMECAT");
@@ -157,19 +171,6 @@ public class ExportProductsFromDatabase {
         root.appendChild(tNewCatalog);
 
         doc.appendChild(root);
-
-        // This should send the file to browser
-        OutputStream out = response.getOutputStream();
-        // Generating Result .. output steam
-        Result result = new StreamResult(out);
-        Source source = new DOMSource(doc);
-
-        // Write the DOM document to the file in this case to the outputstream
-        Transformer xformer = TransformerFactory.newInstance().newTransformer();
-        xformer.transform(source, result);
-
-        out.close();
-        return out;
 
     }
 
@@ -288,9 +289,22 @@ public class ExportProductsFromDatabase {
         OutputStream output = response.getOutputStream();
         Result result = new StreamResult(output);
 
+        // Transform The BMECAT to xhtml
         TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer(new StreamSource(input));
-        transformer.transform(new StreamSource((InputStream) doc), result);
+        Transformer transformer = factory.newTransformer();
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer = factory.newTransformer(new StreamSource(input));
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Source xmlSource = new DOMSource(doc);
+        Result outputTarget = new StreamResult(outputStream);
+        TransformerFactory.newInstance().newTransformer().transform(xmlSource, outputTarget);
+        InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
+
+        transformer.transform(new StreamSource(is), result);
+
+        output.close();
 
         return output;
     }

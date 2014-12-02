@@ -9,6 +9,7 @@ import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.IBOUser;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ExportProductsFromDatabase;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ReportDTO;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -56,25 +57,31 @@ public class ExportXML implements IAction {
 
             if (Security.getInstance().isUserAllowed(user, Security.ACTION_READ, Security.ACTION_READ)) {
 
-                response.setHeader("Content-Disposition", "attachment;filename=catalog.xml");
-
                 String filter = (String) request.getParameter("substring");
-                String bmecat = (String) request.getParameter("BMEcat");
-                String xhtml = (String) request.getParameter("XHTML");
+                String exportType = (String) request.getParameter("exportType");
 
                 // Check if an output format is chosen
-                if (!(bmecat == null && xhtml == null)) {
+                if (exportType != null) {
                     try {
                         System.out.println("Start exporting");
                         System.out.println(filter);
-                        System.out.println(bmecat);
+                        System.out.println(exportType);
 
-                        // Generating Object of the Export class.
-                        ExportProductsFromDatabase export = new ExportProductsFromDatabase();
-                        OutputStream out = export.export(filter, bmecat, xhtml, response);
+                        ReportDTO dto;
 
-                        // Return message if Export works fine.
-                        returnpath = "exportxml.jsp?infomessage=Well done.";
+                        if (exportType.equals("BMEcat")) {
+                            response.setHeader("Content-Disposition", "attachment;filename=catalog.xml");
+                            // Generating Object of the Export class.
+                            ExportProductsFromDatabase export = new ExportProductsFromDatabase();
+                            dto = export.export(filter, exportType, response);
+                            OutputStream out = dto.getExport();
+                        } else {
+                            ExportProductsFromDatabase export = new ExportProductsFromDatabase();
+                            dto = export.export(filter, exportType, response);
+                            OutputStream out = dto.getExport();
+                        }
+
+                        returnpath = "exportxml.jsp?infomessage=" + dto.getMessage();
                     } catch (ParserConfigurationException | IOException | TransformerException ex) {
                         Logger.getLogger(ExportXML.class.getName()).log(Level.SEVERE, null, ex);
                     }

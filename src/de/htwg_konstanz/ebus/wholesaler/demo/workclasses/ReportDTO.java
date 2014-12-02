@@ -5,6 +5,8 @@
  */
 package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
+import java.io.OutputStream;
+
 /**
  *
  * @author Felix
@@ -19,6 +21,15 @@ public class ReportDTO {
      * Report Message.
      */
     private String message;
+
+    /**
+     * Export form Database.
+     */
+    private OutputStream export;
+    /**
+     * Exporttype.
+     */
+    private String exportType;
 
     /**
      * Construktor.
@@ -65,6 +76,42 @@ public class ReportDTO {
      */
     public final void setMessage(final String messageIN) {
         this.message = messageIN;
+    }
+
+    /**
+     * Returns the Export.
+     *
+     * @return ExportProductsFromDatabase
+     */
+    public final OutputStream getExport() {
+        return export;
+    }
+
+    /**
+     * Set the export.
+     *
+     * @param exportIN ExportProductsFromDatabase
+     */
+    public final void setExport(final OutputStream exportIN) {
+        this.export = exportIN;
+    }
+
+    /**
+     * Get the Exporttype.
+     *
+     * @return String
+     */
+    public final String getExportType() {
+        return exportType;
+    }
+
+    /**
+     * Set the exportType.
+     *
+     * @param exportTypeIN String
+     */
+    public final void setExportType(final String exportTypeIN) {
+        this.exportType = exportTypeIN;
     }
 
 }
