@@ -15,6 +15,7 @@ import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.PriceBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.SupplierBOA;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -37,10 +38,14 @@ public final class SaveProductsToDatabase {
     private static final int TWENTY = 20;
 
     /**
+     * List with the not imported Products.
+     */
+    private List<String> noImported;
+
+    /**
      * Private Konstruktor für Singleton Pattern.
      */
     private SaveProductsToDatabase() {
-
     }
 
     /**
@@ -59,13 +64,18 @@ public final class SaveProductsToDatabase {
      * Reads the XML file an persistates the new products.
      *
      * @param xmlFile org.w3c.dom.Document
+     * @return ReportDTO
      */
     public ReportDTO readXML(final org.w3c.dom.Document xmlFile) {
         NodeList nodes = xmlFile.getElementsByTagName("ARTICLE");
-        NodeList SupplierNodes = xmlFile.getElementsByTagName("SUPPLIER");
-        Node nodeSup = SupplierNodes.item(0);
+        NodeList supplierNodes = xmlFile.getElementsByTagName("SUPPLIER");
+        Node nodeSup = supplierNodes.item(0);
         Element supplierName = (Element) nodeSup;
 
+        ReportDTO dto = new ReportDTO(true, "");
+
+        // initializing the Array of not imported Products
+        this.noImported = new ArrayList<>();
         int productCounter = 0;
 
         for (int temp = 0; temp < nodes.getLength(); temp++) {
@@ -107,12 +117,25 @@ public final class SaveProductsToDatabase {
 
                 // if not found create a new Supplier
                 if (supllierlist.isEmpty()) {
-                    return new ReportDTO(false, "Sorry Supplier not found in Database. Please insert supplier first manually and try again!");
+                    dto.setType(false);
+                    dto.setMessage("Sorry Supplier not found in Database. Please insert supplier first manually and try again!");
+                    return dto;
                 } else {
                     supplier = (BOSupplier) supllierlist.get(0);
                 }
                 // Set supplier for product
                 product.setSupplier(supplier);
+
+                // Check if product already is persitent in database, if ture abort the import and send feedback
+                BOProduct check = ProductBOA.getInstance().findByOrderNumberCustomer(product.getOrderNumberCustomer());
+
+                System.out.println(check);
+
+                if (check != null) {
+                    System.out.println("------------------- Produkt already in DB");
+                    noImported.add(product.getOrderNumberCustomer());
+                    continue;
+                }
 
                 // persistating product
                 ProductBOA.getInstance().saveOrUpdate(product);
@@ -157,7 +180,20 @@ public final class SaveProductsToDatabase {
 
             }
         }
-        return new ReportDTO(true, "All " + productCounter + " poducts successfully imported.");
+
+        // Check which message have to be send
+        if (!noImported.isEmpty()) {
+            dto.setMessage("Not all poducts imported. " + noImported.size() + " products have already been in database. New products: " + (productCounter - noImported.size()));
+            dto.setNotImported(noImported);
+            dto.setType(false);
+        } else {
+            dto.setMessage("All " + productCounter + " poducts successfully imported.");
+            dto.setNotImported(noImported);
+            dto.setType(true);
+        }
+        productCounter = 0;
+        noImported = null;
+        return dto;
     }
 
     /**

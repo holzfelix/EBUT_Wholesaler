@@ -6,6 +6,7 @@
 package de.htwg_konstanz.ebus.wholesaler.demo.workclasses;
 
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  *
@@ -30,6 +31,8 @@ public class ReportDTO {
      * Exporttype.
      */
     private String exportType;
+
+    private List notImported;
 
     /**
      * Construktor.
@@ -112,6 +115,24 @@ public class ReportDTO {
      */
     public final void setExportType(final String exportTypeIN) {
         this.exportType = exportTypeIN;
+    }
+
+    /**
+     * Returns the List of not imported products.
+     *
+     * @return List
+     */
+    public final List getNotImported() {
+        return notImported;
+    }
+
+    /**
+     * Set the List of notImported Products.
+     *
+     * @param notImportedIN List
+     */
+    public final void setNotImported(final List notImportedIN) {
+        this.notImported = notImportedIN;
     }
 
 }

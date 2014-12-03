@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -45,8 +46,9 @@
                     }%></span>
                 <span class="error">
                     <% if (errormessage != null) {
-                        out.write(errormessage);
-                    }%></span></p>
+                            out.write(errormessage);
+                        }%></span></p>
+
             <!-- XML - Upload Form-->
             <form action="controllerservlet?action=ImportXML" enctype="multipart/form-data" method="post" onSubmit="return checkUpload();">
                 <label>File upload</label>

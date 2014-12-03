@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -56,7 +57,7 @@ public class ImportXML implements IAction {
             // at this time the authorization is not fully implemented.
             // -> use the "Security.RESOURCE_ALL" constant which includes all resources.
             if (Security.getInstance().isUserAllowed(loginBean.getUser(), Security.RESOURCE_ALL, Security.ACTION_READ)) {
-
+                response.setContentType("text/html;charset=UTF-8");
                 /*--------------------------------------
                  -- Start Import
                  ----------------------------------------*/
@@ -78,6 +79,9 @@ public class ImportXML implements IAction {
                         }
                         // Reads the XML-File and saves the Products to the Database
                         ReportDTO returnval = saveProduct.readXML(document);
+
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("notimported", returnval.getNotImported());
 
                         if (returnval.getType()) {
                             return "importxml.jsp?infomessage=" + returnval.getMessage();
