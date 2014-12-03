@@ -132,7 +132,5 @@ public final class XmlParser {
             System.out.println("VALIDATON ERROR" + e);
             return false;
         }
-
     }
-
 }
