@@ -301,7 +301,8 @@ public class ExportProductsFromDatabase {
         Result outputTarget = new StreamResult(outputStream);
         TransformerFactory.newInstance().newTransformer().transform(xmlSource, outputTarget);
         InputStream is = new ByteArrayInputStream(outputStream.toByteArray());
-
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
         transformer.transform(new StreamSource(is), result);
 
         output.close();

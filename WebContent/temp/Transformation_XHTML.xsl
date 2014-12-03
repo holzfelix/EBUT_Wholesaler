@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
     <xsl:output method="html"
+                version="5.0"
                 doctype-public="-//W3C//DTD XHTML 1.1//EN"
                 doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
                 indent="yes"
@@ -9,6 +10,8 @@
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
                 <title>Produktkatalog</title>
+                <meta http-equiv="cache-control" content="no-cache"/>
+                <meta http-equiv="pragma" content="no-cache"/>
                 <link rel="stylesheet" type="text/css" href="default.css"></link>
             </head>
             <xsl:apply-templates select="BMECAT/HEADER"/>
