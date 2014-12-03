@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <% String infomessage = request.getParameter("infomessage");
-    String errormessage = request.getParameter("errormessage");%>
+    String errormessage = request.getParameter("errormessage");
+    String notimported = request.getParameter("notimported");%>
 
 
 <html>
@@ -48,6 +49,16 @@
                     <% if (errormessage != null) {
                             out.write(errormessage);
                         }%></span></p>
+
+            <!-- Output for those Products which were not imported -->
+            <% if (notimported != null) {
+                    out.write("<b>Not imported:</b><br><ul>");
+                    String[] splitResult = notimported.split(",");
+                    for (String s : splitResult) {
+                        out.write("<li>" + s + "</li>");
+                    }
+                    out.write("</ul>");
+                }%>
 
             <!-- XML - Upload Form-->
             <form action="controllerservlet?action=ImportXML" enctype="multipart/form-data" method="post" onSubmit="return checkUpload();">

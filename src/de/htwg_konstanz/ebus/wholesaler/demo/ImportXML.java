@@ -15,11 +15,11 @@ import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.XmlParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -80,13 +80,19 @@ public class ImportXML implements IAction {
                         // Reads the XML-File and saves the Products to the Database
                         ReportDTO returnval = saveProduct.readXML(document);
 
-                        HttpSession session = request.getSession(true);
-                        session.setAttribute("notimported", returnval.getNotImported());
+                        // Writes the products which are already in database to the URL
+                        String notimported = "";
+                        if (!returnval.getNotImported().isEmpty()) {
+                            ListIterator<Integer> li = returnval.getNotImported().listIterator();
+                            while (li.hasNext()) {
+                                notimported = notimported + li.next() + ",";
+                            }
+                        }
 
                         if (returnval.getType()) {
                             return "importxml.jsp?infomessage=" + returnval.getMessage();
                         } else {
-                            return "importxml.jsp?errormessage=" + returnval.getMessage();
+                            return "importxml.jsp?errormessage=" + returnval.getMessage() + "&notimported=" + notimported;
                         }
                         // XML File Validieeren
                     } catch (FileUploadException | IOException | SAXException | ParserConfigurationException ex) {
