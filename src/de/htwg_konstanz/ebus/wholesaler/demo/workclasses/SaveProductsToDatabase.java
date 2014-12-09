@@ -203,6 +203,6 @@ public final class SaveProductsToDatabase {
      * @return BigDecimal
      */
     private BigDecimal increaseSalesPrice(final BigDecimal amount) {
-        return amount.multiply(new BigDecimal(TWENTY));
+        return amount.add(amount.multiply(new BigDecimal(0.2)));
     }
 }
