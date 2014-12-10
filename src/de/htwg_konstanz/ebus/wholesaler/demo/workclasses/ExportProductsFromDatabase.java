@@ -160,11 +160,11 @@ public class ExportProductsFromDatabase {
         supplier.appendChild(supplierName);
 
         language.setTextContent("deu");
-        catalogId.setTextContent("#HTWG-EBUS-12");
+        catalogId.setTextContent("Sarah und Felix");
         catalogVersion.setTextContent("1.0");
         catalogName.setTextContent("Beispielproduktkatalog für E-Business Laborpraktika");
 
-        supplierName.setTextContent("HTWG");
+        supplierName.setTextContent("HTWG Konstanz");
 
         Element tNewCatalog = createTNewCatalog();
         root.appendChild(header);

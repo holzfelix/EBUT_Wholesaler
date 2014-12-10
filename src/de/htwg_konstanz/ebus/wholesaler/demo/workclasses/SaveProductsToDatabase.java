@@ -88,7 +88,6 @@ public final class SaveProductsToDatabase {
                 System.out.println("DESCRIPTION_LONG: " + eElement.getElementsByTagName("DESCRIPTION_LONG").item(0).getTextContent());
                 System.out.println("EAN: " + eElement.getElementsByTagName("EAN").item(0).getTextContent());
                 System.out.println("ORDER_UNIT: " + eElement.getElementsByTagName("ORDER_UNIT").item(0).getTextContent());
-                System.out.println("CONTENT_UNIT: " + eElement.getElementsByTagName("CONTENT_UNIT").item(0).getTextContent());
                 System.out.println("NO_CU_PER_OU: " + eElement.getElementsByTagName("NO_CU_PER_OU").item(0).getTextContent());
 
                 // Generating a new Product
