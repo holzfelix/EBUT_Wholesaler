@@ -55,7 +55,6 @@ public final class Upload {
 
             // List of all uploaded Files
             List files = upload.parseRequest(request);
-            byte[] buffer = new byte[BYTE];
 
             // Returns the uploaded File
             Iterator iter = files.iterator();

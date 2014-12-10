@@ -28,28 +28,14 @@ import org.xml.sax.SAXException;
  */
 public final class XmlParser {
 
-    /**
-     * Private instanz Variable.
-     */
-    private static XmlParser instance;
+    private ParseReportDTO reportDto;
+    private org.w3c.dom.Document doc;
 
     /**
-     * Private Konstruktor für Singleton Pattern.
+     * Konstruktor.
      */
-    private XmlParser() {
-
-    }
-
-    /**
-     * Singleton get Instance.
-     *
-     * @return XmlParser
-     */
-    public static XmlParser getInstance() {
-        if (instance == null) {
-            instance = new XmlParser();
-        }
-        return instance;
+    public XmlParser() {
+        reportDto = new ParseReportDTO(null, null);
     }
 
     /**
@@ -61,18 +47,21 @@ public final class XmlParser {
      * @throws SAXException Exception Handling.
      * @throws IOException Exception Handling.
      */
-    public org.w3c.dom.Document validateTheXml(final InputStream is) throws IOException, SAXException, ParserConfigurationException {
-        org.w3c.dom.Document doc = parseXML(is);
+    public ParseReportDTO validateTheXml(final InputStream is) throws IOException, SAXException, ParserConfigurationException {
+
+        doc = parseXML(is);
         // If document couldn't be parsed return an empty doc
         if (doc == null) {
-            return doc;
+            reportDto.setDoc(null);
+            return reportDto;
         }
         // if validation error return null
         if (!validateXML(doc)) {
-            return null;
+            reportDto.setDoc(null);
+            return reportDto;
         }
-
-        return doc;
+        reportDto.setDoc(doc);
+        return reportDto;
     }
 
     /**
@@ -92,7 +81,7 @@ public final class XmlParser {
             org.w3c.dom.Document document = db.parse(is);
             return document;
         } catch (SAXException e) {
-            System.out.println("Dokument not Valid" + e);
+            reportDto.setMessage("XML was not wellformed " + e.getMessage());
             return null;
         }
 
@@ -127,9 +116,11 @@ public final class XmlParser {
         try {
             validator.validate(new DOMSource(dom));
             System.out.println("Your Document is valid.");
+            reportDto.setMessage("Your Document is valid.");
             return true;
         } catch (SAXException e) {
-            System.out.println("VALIDATON ERROR" + e);
+            System.out.println("VALIDATON ERROR " + e);
+            reportDto.setMessage("VALIDATON ERROR " + e.getMessage());
             return false;
         }
     }

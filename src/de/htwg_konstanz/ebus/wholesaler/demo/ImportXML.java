@@ -8,6 +8,7 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import static de.htwg_konstanz.ebus.wholesaler.demo.ExportXML.PARAM_LOGIN_BEAN;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
+import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ParseReportDTO;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.ReportDTO;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.SaveProductsToDatabase;
 import de.htwg_konstanz.ebus.wholesaler.demo.workclasses.Upload;
@@ -39,7 +40,7 @@ public class ImportXML implements IAction {
     /**
      * Gets the instace of the Xml Parser.
      */
-    private final XmlParser xmlParser = XmlParser.getInstance();
+    private final XmlParser xmlParser = new XmlParser();
 
     /**
      * Gets the instance of the SaveProductsToDatabase Class.
@@ -73,16 +74,20 @@ public class ImportXML implements IAction {
                         }
 
                         // Returns the valid XML document
-                        org.w3c.dom.Document document = xmlParser.validateTheXml(is);
-                        if (document == null) {
-                            return "importxml.jsp?errormessage=Sorry your xml-file was not valid.";
+                        ParseReportDTO report = xmlParser.validateTheXml(is);
+                        org.w3c.dom.Document doc = report.getDoc();
+                        if (doc == null) {
+                            return "importxml.jsp?errormessage=" + report.getMessage();
                         }
+
+                        System.out.println(doc);
+
                         // Reads the XML-File and saves the Products to the Database
-                        ReportDTO returnval = saveProduct.readXML(document);
+                        ReportDTO returnval = saveProduct.readXML(doc);
 
                         // Writes the products which are already in database to the URL
                         String notimported = "";
-                        if (!returnval.getNotImported().isEmpty()) {
+                        if (returnval.getNotImported() != null) {
                             ListIterator<Integer> li = returnval.getNotImported().listIterator();
                             while (li.hasNext()) {
                                 notimported = notimported + li.next() + ",";

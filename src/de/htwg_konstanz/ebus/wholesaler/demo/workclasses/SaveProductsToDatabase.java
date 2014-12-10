@@ -33,11 +33,6 @@ public final class SaveProductsToDatabase {
     private static SaveProductsToDatabase instance;
 
     /**
-     * Constant für the int value 20.
-     */
-    private static final int TWENTY = 20;
-
-    /**
      * List with the not imported Products.
      */
     private List<String> noImported;

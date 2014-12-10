@@ -22,7 +22,7 @@
                     // Red boarder around the input field
                     $("#xmlfile").css("border", "solid 2px red");
                     // altert to inform the user that he has to choose a file
-                    alert("No file chosen, Please first choose a File an then try uploading again");
+                    alert("No file chosen. Please first choose a file and then try uploading again");
                     return false;
                 }
                 return true;
@@ -51,7 +51,7 @@
                         }%></span></p>
 
             <!-- Output for those Products which were not imported -->
-            <% if (notimported != null) {
+            <% if (notimported != null && notimported != "") {
                     out.write("<b>Not imported:</b><br><ul>");
                     String[] splitResult = notimported.split(",");
                     for (String s : splitResult) {
