@@ -62,7 +62,9 @@ public final class SaveProductsToDatabase {
      * @return ReportDTO
      */
     public ReportDTO readXML(final org.w3c.dom.Document xmlFile) {
+        // Nodelist with all Articles
         NodeList nodes = xmlFile.getElementsByTagName("ARTICLE");
+        // Supplier
         NodeList supplierNodes = xmlFile.getElementsByTagName("SUPPLIER");
         Node nodeSup = supplierNodes.item(0);
         Element supplierName = (Element) nodeSup;

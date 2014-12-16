@@ -175,7 +175,7 @@ public class ExportProductsFromDatabase {
     }
 
     /**
-     * Generets the Katalog (all above the T_New_Catalog tag).
+     * Generates the Katalog (all above the T_New_Catalog tag).
      *
      * @return Element
      */
