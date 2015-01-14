@@ -53,6 +53,11 @@ public class Constants {
      */
     public static final String ACTION_SHOW_EXPORTJSP = "ExportXML";
 
+    /**
+     * Update Catalaog.
+     */
+    public static final String ACTION_UPDATE_CATALOG = "UpdateCatalog";
+
     public static final String PARAM_LOGIN_BEAN = "loginBean";
     public static final String PARAM_NAME_ORDER_ID = "orderId";
     public static final String PARAM_ORDER = "order";

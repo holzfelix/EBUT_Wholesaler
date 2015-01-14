@@ -1,5 +1,5 @@
 
-package de.htwg_konstanz.ebus.wholesaler.updatecatalog;
+package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für authentication complex type.
+ * <p>Java-Klasse fï¿½r authentication complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 

@@ -1,5 +1,5 @@
 
-package de.htwg_konstanz.ebus.wholesaler.updatecatalog;
+package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für price complex type.
+ * <p>Java-Klasse fï¿½r price complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 

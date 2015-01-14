@@ -11,6 +11,7 @@
 <a href="<%= response.encodeURL("controllerservlet?action=showOrderList") %>"><img alt="Orders" title="Orders" border="0" src="images/buttons/order.png">&nbsp;Orders</a>&nbsp;&nbsp;
 <a href="<%= response.encodeURL("controllerservlet?action=ImportXML") %>"><img alt="ImportXML" title="Orders" border="0" src="images/buttons/import.png">&nbsp;Import</a>&nbsp;&nbsp;
 <a href="<%= response.encodeURL("controllerservlet?action=ExportXML") %>"><img alt="ExportXML" title="Orders" border="0" src="images/buttons/export.png">&nbsp;Export</a>&nbsp;&nbsp;
+<a href="<%= response.encodeURL("controllerservlet?action=UpdateCatalog") %>"><img alt="ExportXML" title="Orders" border="0" src="images/buttons/export.png">&nbsp;WEBSERVICE</a>&nbsp;&nbsp;
 
 <% }
    else if(loginBean.getRole() == Constants.USER_CUSTOMER)

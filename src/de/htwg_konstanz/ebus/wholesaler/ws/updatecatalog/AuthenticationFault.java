@@ -1,5 +1,5 @@
 
-package de.htwg_konstanz.ebus.wholesaler.updatecatalog;
+package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 
 import javax.xml.ws.WebFault;
 

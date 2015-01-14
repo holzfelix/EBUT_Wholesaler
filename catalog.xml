@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Felix/Dropbox/Studium/WIN/Semester_6/EBUT/Übung/EBUT_Wholesaler/WebContent/wsdl/updateCatalogue.wsdl" uri="src/conf/xml-resources/web-services/UpdateCatalogImpl/wsdl/updateCatalogue.wsdl"/>
+</catalog>

@@ -1,5 +1,5 @@
 
-package de.htwg_konstanz.ebus.wholesaler.updatecatalog;
+package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für supplierProduct complex type.
+ * <p>Java-Klasse fï¿½r supplierProduct complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 

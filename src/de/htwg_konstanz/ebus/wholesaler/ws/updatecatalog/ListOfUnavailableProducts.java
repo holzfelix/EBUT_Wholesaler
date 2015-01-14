@@ -1,5 +1,5 @@
 
-package de.htwg_konstanz.ebus.wholesaler.updatecatalog;
+package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für listOfProducts complex type.
+ * <p>Java-Klasse fï¿½r listOfUnavailableProducts complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType name="listOfProducts">
+ * &lt;complexType name="listOfUnavailableProducts">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "listOfProducts", propOrder = {
+@XmlType(name = "listOfUnavailableProducts", propOrder = {
     "supplierProduct"
 })
-public class ListOfProducts {
+public class ListOfUnavailableProducts {
 
     @XmlElement(required = true)
     protected List<SupplierProduct> supplierProduct;
