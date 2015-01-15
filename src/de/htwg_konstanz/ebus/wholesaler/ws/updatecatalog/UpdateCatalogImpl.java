@@ -8,6 +8,7 @@ package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import java.util.Collection;
+import java.util.List;
 import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceProvider;
 
@@ -23,6 +24,11 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
      * Collection of the Products.
      */
     private Collection<BOProduct> products;
+
+    /**
+     * Instance of the Product Business Object.
+     */
+    private final ProductBOA productBOA = ProductBOA.getInstance();
 
     /**
      * Object Factory.
@@ -46,14 +52,42 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
          */
         ListOfProducts productList = updateRequest.getListOfProducts();
 
-        ListOfUnavailableProducts unavailableProducts = factory.createListOfUnavailableProducts();
-        ListOfUpdatedProducts updatedProducts = factory.createListOfUpdatedProducts();
+        List unavailableProducts = new ListOfUnavailableProducts().getSupplierProduct();
+        List updatedProducts = new ListOfUpdatedProducts().getSupplierProduct();
+
+        String responseString;
+        int changedProduct = 0;
+        int notChangedProuct = 0;
 
         products = ProductBOA.getInstance().findAll();
 
+        /**
+         * Iteration over all Products
+         */
         for (SupplierProduct productSupplier : productList.getSupplierProduct()) {
+            BOProduct product = productBOA.findByOrderNumberSupplier(productSupplier.getSupplierAID());
+
+            if (product != null) {
+                boolean hasLongDescriptionChanged = false;
+                hasLongDescriptionChanged = productSupplier.getLongDescription().equals(product.getLongDescription());
+                boolean hasShortDescriptionChanged = false;
+                hasShortDescriptionChanged = productSupplier.getShortDescription().equals(product.getShortDescription());
+                if ((hasLongDescriptionChanged || hasShortDescriptionChanged)) {
+                    updatedProducts.add(productSupplier);
+                } else {
+                    //responseString ist gleich
+                    responseString = "LongDescription or ShortDescription not changed :" + changedProduct++;
+                }
+
+            } else {
+                responseString = "set supplier product to unvisible product: " + notChangedProuct++;
+                unavailableProducts.add(productSupplier);
+            }
 
         }
+
+        response.setListOfUnavailableProducts((ListOfUnavailableProducts) unavailableProducts);
+        response.setListOfUpdatedProducts((ListOfUpdatedProducts) updatedProducts);
 
         return response;
     }
