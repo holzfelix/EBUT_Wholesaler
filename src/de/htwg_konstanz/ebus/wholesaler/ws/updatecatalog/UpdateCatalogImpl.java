@@ -8,7 +8,6 @@ package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
 import java.util.Collection;
-import java.util.List;
 import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceProvider;
 
@@ -52,8 +51,8 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
          */
         ListOfProducts productList = updateRequest.getListOfProducts();
 
-        List unavailableProducts = new ListOfUnavailableProducts().getSupplierProduct();
-        List updatedProducts = new ListOfUpdatedProducts().getSupplierProduct();
+        ListOfUnavailableProducts unavailableProducts = new ListOfUnavailableProducts();
+        ListOfUpdatedProducts updatedProducts = new ListOfUpdatedProducts();
 
         String responseString;
         int changedProduct = 0;
@@ -73,7 +72,7 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
                 boolean hasShortDescriptionChanged = false;
                 hasShortDescriptionChanged = productSupplier.getShortDescription().equals(product.getShortDescription());
                 if ((hasLongDescriptionChanged || hasShortDescriptionChanged)) {
-                    updatedProducts.add(productSupplier);
+                    updatedProducts.getSupplierProduct().add(productSupplier);
                 } else {
                     //responseString ist gleich
                     responseString = "LongDescription or ShortDescription not changed :" + changedProduct++;
@@ -81,13 +80,13 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
 
             } else {
                 responseString = "set supplier product to unvisible product: " + notChangedProuct++;
-                unavailableProducts.add(productSupplier);
+                unavailableProducts.getSupplierProduct().add(productSupplier);
             }
 
         }
 
-        response.setListOfUnavailableProducts((ListOfUnavailableProducts) unavailableProducts);
-        response.setListOfUpdatedProducts((ListOfUpdatedProducts) updatedProducts);
+        response.setListOfUnavailableProducts(unavailableProducts);
+        response.setListOfUpdatedProducts(updatedProducts);
 
         return response;
     }

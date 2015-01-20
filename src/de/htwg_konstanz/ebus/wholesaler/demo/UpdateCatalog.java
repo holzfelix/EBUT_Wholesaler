@@ -54,7 +54,7 @@ public class UpdateCatalog implements IAction {
             // -> use the "Security.RESOURCE_ALL" constant which includes all resources.
             if (Security.getInstance().isUserAllowed(loginBean.getUser(), Security.RESOURCE_ALL, Security.ACTION_READ)) {
 
-                List productList = new ListOfProducts().getSupplierProduct();
+                ListOfProducts productList = new ListOfProducts();
 
                 /// Get all Products from Databse
                 products = productBOA.findAll();
@@ -77,15 +77,15 @@ public class UpdateCatalog implements IAction {
 
                     prices.add(price);
 
-                    productList.add(p);
+                    productList.getSupplierProduct().add(p);
 
                 }
 
-                System.out.println("Anzahl Produkte in productList " + productList.size());
+                System.out.println("Anzahl Produkte in productList " + productList.getSupplierProduct().size());
 
                 UpdateRequest updateRequest = new UpdateRequest();
 
-                updateRequest.setListOfProducts((ListOfProducts) productList);
+                updateRequest.setListOfProducts(productList);
 
                 try {
                     UpdateCatalogImpl test = new UpdateCatalogImpl();
