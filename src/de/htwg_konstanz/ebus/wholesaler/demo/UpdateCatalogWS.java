@@ -54,30 +54,36 @@ public class UpdateCatalogWS implements IAction {
             // -> use the "Security.RESOURCE_ALL" constant which includes all resources.
             if (Security.getInstance().isUserAllowed(loginBean.getUser(), Security.RESOURCE_ALL, Security.ACTION_READ)) {
 
+                String supplierID = request.getParameter("supplier");
+
+                System.out.println("SupplierID: " + supplierID);
+
                 ListOfProducts productList = new ListOfProducts();
 
                 /// Get all Products from Databse
                 products = productBOA.findAll();
 
                 for (BOProduct product : products) {
-                    SupplierProduct p = new SupplierProduct();
-                    p.setLongDescription(product.getLongDescription());
-                    p.setShortDescription(product.getShortDescription());
-                    p.setSupplierAID(product.getOrderNumberSupplier());
+                    if (product.getSupplier().getSupplierNumber().equals(supplierID)) {
+                        SupplierProduct p = new SupplierProduct();
+                        p.setLongDescription(product.getLongDescription());
+                        p.setShortDescription(product.getShortDescription());
+                        p.setSupplierAID(product.getOrderNumberSupplier());
 
-                    List prices = p.getPrice();
+                        List prices = p.getPrice();
 
-                    Price price = new Price();
-                    price.setAmount(BigDecimal.ZERO);
-                    price.setCountryISOCode(PARAM_LOGIN_BEAN);
-                    price.setCurrency(PARAM_LOGIN_BEAN);
-                    price.setLowerBound(BigInteger.ZERO);
-                    price.setPricetype(PARAM_LOGIN_BEAN);
-                    price.setTax(BigDecimal.ZERO);
+                        Price price = new Price();
+                        price.setAmount(BigDecimal.ZERO);
+                        price.setCountryISOCode(PARAM_LOGIN_BEAN);
+                        price.setCurrency(PARAM_LOGIN_BEAN);
+                        price.setLowerBound(BigInteger.ZERO);
+                        price.setPricetype(PARAM_LOGIN_BEAN);
+                        price.setTax(BigDecimal.ZERO);
 
-                    prices.add(price);
+                        prices.add(price);
 
-                    productList.getSupplierProduct().add(p);
+                        productList.getSupplierProduct().add(p);
+                    }
 
                 }
 
