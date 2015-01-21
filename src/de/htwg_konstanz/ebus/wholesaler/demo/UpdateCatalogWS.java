@@ -16,6 +16,7 @@ import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.Price;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.SupplierProduct;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateCatalogImpl;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateRequest;
+import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -36,6 +37,11 @@ public class UpdateCatalogWS implements IAction {
      * Collection of the Products.
      */
     private Collection<BOProduct> products;
+
+    /**
+     * Response from WS.
+     */
+    private UpdateResponse res;
 
     /**
      * Instance of the Product Business Object.
@@ -95,10 +101,13 @@ public class UpdateCatalogWS implements IAction {
 
                 try {
                     UpdateCatalogImpl test = new UpdateCatalogImpl();
-                    test.updateCatalog(updateRequest);
+                    res = test.updateCatalog(updateRequest);
                 } catch (AuthenticationFault ex) {
                     Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
+                System.out.println("Unavailable: " + res.getListOfUnavailableProducts().getSupplierProduct().size());
+                System.out.println("Updated: " + res.getListOfUpdatedProducts().getSupplierProduct().size());
 
             } else {
                 // authorization failed -> show error message

@@ -51,6 +51,8 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
          */
         ListOfProducts productList = updateRequest.getListOfProducts();
 
+        System.out.println("Zu verarbeitendeprodukte: " + productList.getSupplierProduct().size());
+
         ListOfUnavailableProducts unavailableProducts = new ListOfUnavailableProducts();
         ListOfUpdatedProducts updatedProducts = new ListOfUpdatedProducts();
 
@@ -71,7 +73,7 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
                 hasLongDescriptionChanged = productSupplier.getLongDescription().equals(product.getLongDescription());
                 boolean hasShortDescriptionChanged = false;
                 hasShortDescriptionChanged = productSupplier.getShortDescription().equals(product.getShortDescription());
-                if ((hasLongDescriptionChanged || hasShortDescriptionChanged)) {
+                if ((!hasLongDescriptionChanged || !hasShortDescriptionChanged)) {
                     updatedProducts.getSupplierProduct().add(productSupplier);
                 } else {
                     //responseString ist gleich
