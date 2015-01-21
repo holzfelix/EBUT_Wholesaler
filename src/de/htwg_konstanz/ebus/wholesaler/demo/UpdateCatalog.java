@@ -94,6 +94,8 @@ public class UpdateCatalog implements IAction {
                     Logger.getLogger(UpdateCatalog.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+                return "welcome.jsp";
+
             } else {
                 // authorization failed -> show error message
                 errorList.add("You are not allowed to perform this action!");
@@ -104,7 +106,6 @@ public class UpdateCatalog implements IAction {
             // redirect to the login page
             return "login.jsp";
         }
-        return null;
     }
 
     @Override
