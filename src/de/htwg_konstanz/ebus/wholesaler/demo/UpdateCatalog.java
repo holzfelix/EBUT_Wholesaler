@@ -7,11 +7,13 @@ package de.htwg_konstanz.ebus.wholesaler.demo;
 
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
+import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.SupplierBOA;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.security.Security;
 import static de.htwg_konstanz.ebus.wholesaler.demo.ExportXML.PARAM_LOGIN_BEAN;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,7 +44,8 @@ public class UpdateCatalog implements IAction {
             // at this time the authorization is not fully implemented.
             // -> use the "Security.RESOURCE_ALL" constant which includes all resources.
             if (Security.getInstance().isUserAllowed(loginBean.getUser(), Security.RESOURCE_ALL, Security.ACTION_READ)) {
-
+                List<?> supplierList = SupplierBOA.getInstance().findAll();
+                request.getSession(true).setAttribute("supplierList", supplierList);
                 return "updatecatalog.jsp";
             } else {
                 // authorization failed -> show error message
