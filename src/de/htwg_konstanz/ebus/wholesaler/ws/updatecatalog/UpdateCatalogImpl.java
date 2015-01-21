@@ -7,7 +7,11 @@ package de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog;
 
 import de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOProduct;
 import de.htwg_konstanz.ebus.framework.wholesaler.api.boa.ProductBOA;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceProvider;
 
@@ -59,6 +63,12 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
         String responseString;
         int changedProduct = 0;
         int notChangedProuct = 0;
+
+        try {
+            System.out.println("Host Name/Adresse: " + InetAddress.getLocalHost());
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(UpdateCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         products = ProductBOA.getInstance().findAll();
 

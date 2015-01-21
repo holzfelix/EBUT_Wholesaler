@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions 
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
-	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:tns="http://localhost:8084/EBUT_Wholesaler/updatecatalog" 
-	targetNamespace="http://localhost:8084/EBUT_Wholesaler/updatecatalog">
+<wsdl:definitions
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tns="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog"
+    targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog">
 
 
-	<wsdl:types>
-		<xs:schema targetNamespace="http://localhost:8084/EBUT_Wholesaler/updatecatalog" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-			<xs:element name="updateRequest">
-				<xs:complexType >
-					<xs:sequence>
-						<xs:element name="authentication" type="tns:authentication" minOccurs="1" maxOccurs="1"/>
-						<xs:element name="listOfProducts" type="tns:listOfProducts" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+            <xs:element name="updateRequest">
+                <xs:complexType >
+                    <xs:sequence>
+                        <xs:element name="authentication" type="tns:authentication" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="listOfProducts" type="tns:listOfProducts" minOccurs="1" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
 
-			<xs:complexType name="authentication">
-				<xs:sequence>
-					<xs:element name="wholesalerName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="wsUsername" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="wsPassword" type="xs:string" minOccurs="1" maxOccurs="1"/>
-				</xs:sequence>
-			</xs:complexType>
+            <xs:complexType name="authentication">
+                <xs:sequence>
+                    <xs:element name="wholesalerName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="wsUsername" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="wsPassword" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
 
-			<xs:complexType name="listOfProducts">
-				<xs:sequence>
-					<xs:element name="supplierProduct" type="tns:supplierProduct" minOccurs="1" maxOccurs="unbounded"/>
-				</xs:sequence>
-			</xs:complexType>
+            <xs:complexType name="listOfProducts">
+                <xs:sequence>
+                    <xs:element name="supplierProduct" type="tns:supplierProduct" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
 
-			<xs:complexType name="supplierProduct">
-				<xs:sequence>
-					<xs:element name="supplierAID" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="shortDescription" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="longDescription" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="price" type="tns:price" minOccurs="1" maxOccurs="unbounded"/>
-				</xs:sequence>
-			</xs:complexType>
+            <xs:complexType name="supplierProduct">
+                <xs:sequence>
+                    <xs:element name="supplierAID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="shortDescription" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="longDescription" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="price" type="tns:price" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
 
-			<xs:complexType name="price">
-				<xs:sequence>
-					<xs:element name="amount" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="currency" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="tax" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="pricetype" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="countryISOCode" type="xs:string" minOccurs="1" maxOccurs="1"/>
-					<xs:element name="lowerBound" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-				</xs:sequence>
-			</xs:complexType>
+            <xs:complexType name="price">
+                <xs:sequence>
+                    <xs:element name="amount" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="currency" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="tax" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="pricetype" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="countryISOCode" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="lowerBound" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
 
-			<xs:element name="updateResponse">
-				<xs:complexType >
-					<xs:sequence>
-						<xs:element name="updateDate" type="xs:date" minOccurs="1" maxOccurs="1"/>
-						<xs:element name="listOfUpdatedProducts" type="tns:listOfUpdatedProducts" minOccurs="1" maxOccurs="1"/>
-						<xs:element name="listOfUnavailableProducts" type="tns:listOfUnavailableProducts" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+            <xs:element name="updateResponse">
+                <xs:complexType >
+                    <xs:sequence>
+                        <xs:element name="updateDate" type="xs:date" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="listOfUpdatedProducts" type="tns:listOfUpdatedProducts" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="listOfUnavailableProducts" type="tns:listOfUnavailableProducts" minOccurs="1" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
 
-			<xs:element name="faultType">
-				<xs:simpleType>
-					<xs:restriction base="xs:string"/>
-				</xs:simpleType>
-			</xs:element>
+            <xs:element name="faultType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
 
-			<xs:complexType name="listOfUpdatedProducts">
-				<xs:sequence>
-					<xs:element name="supplierProduct" type="tns:supplierProduct" minOccurs="1" maxOccurs="unbounded"/>
-				</xs:sequence>
-			</xs:complexType>
+            <xs:complexType name="listOfUpdatedProducts">
+                <xs:sequence>
+                    <xs:element name="supplierProduct" type="tns:supplierProduct" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
 
-			<xs:complexType name="listOfUnavailableProducts">
-				<xs:sequence>
-					<xs:element name="supplierProduct" type="tns:supplierProduct" minOccurs="1" maxOccurs="unbounded"/>
-				</xs:sequence>
-			</xs:complexType>
-		</xs:schema>
-	</wsdl:types>
+            <xs:complexType name="listOfUnavailableProducts">
+                <xs:sequence>
+                    <xs:element name="supplierProduct" type="tns:supplierProduct" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
 
-	<wsdl:message name="updateCatalogRequest">
-		<wsdl:part name="updateRequest" element="tns:updateRequest"/>
-	</wsdl:message>
+    <wsdl:message name="updateCatalogRequest">
+        <wsdl:part name="updateRequest" element="tns:updateRequest"/>
+    </wsdl:message>
 
-	<wsdl:message name="updateResponse">
-		<wsdl:part name="updateResponse" element="tns:updateResponse"/>
-	</wsdl:message>
+    <wsdl:message name="updateResponse">
+        <wsdl:part name="updateResponse" element="tns:updateResponse"/>
+    </wsdl:message>
 
-	<wsdl:message name="authenticationFault">
-		<wsdl:part name="authenticationFault" element="tns:faultType"/>
-	</wsdl:message>
-
-
-	<wsdl:portType name="UpdateCatalog">
-		<wsdl:operation name="updateCatalog">
-			<wsdl:input message="tns:updateCatalogRequest"/>
-			<wsdl:output message="tns:updateResponse"/>
-			<wsdl:fault name="authenticationFault" message="tns:authenticationFault"/>
-		</wsdl:operation>
-	</wsdl:portType>
-
-	<wsdl:binding name="SingleBindingForTheInterfaceAbove" type="tns:UpdateCatalog">
-		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-		<wsdl:operation name="updateCatalog">
-			<soap:operation soapAction="urn:#updateCatalog"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-			<wsdl:fault name="authenticationFault" xsi:type="wsdl:tBindingOperationFault">
-				<soap:fault name="authenticationFault" use="literal"/>
-			</wsdl:fault>
-		</wsdl:operation>
-	</wsdl:binding>
+    <wsdl:message name="authenticationFault">
+        <wsdl:part name="authenticationFault" element="tns:faultType"/>
+    </wsdl:message>
 
 
-	<wsdl:service name="UpdateCatalogWebService">
-		<wsdl:port name="updateCatalogPort" binding="tns:SingleBindingForTheInterfaceAbove">
-			<soap:address location="http://localhost:8084/EBUT_Wholesaler/updatecatalog"/>
-		</wsdl:port>
-	</wsdl:service>
+    <wsdl:portType name="UpdateCatalog">
+        <wsdl:operation name="updateCatalog">
+            <wsdl:input message="tns:updateCatalogRequest"/>
+            <wsdl:output message="tns:updateResponse"/>
+            <wsdl:fault name="authenticationFault" message="tns:authenticationFault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="SingleBindingForTheInterfaceAbove" type="tns:UpdateCatalog">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="updateCatalog">
+            <soap:operation soapAction="urn:#updateCatalog"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="authenticationFault" xsi:type="wsdl:tBindingOperationFault">
+                <soap:fault name="authenticationFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+
+    <wsdl:service name="UpdateCatalogWebService">
+        <wsdl:port name="updateCatalogPort" binding="tns:SingleBindingForTheInterfaceAbove">
+            <soap:address location="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog"/>
+        </wsdl:port>
+    </wsdl:service>
 
 
 </wsdl:definitions>
