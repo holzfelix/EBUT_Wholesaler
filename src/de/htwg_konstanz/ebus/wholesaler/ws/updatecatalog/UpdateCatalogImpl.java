@@ -40,7 +40,7 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
     }
 
     @Override
-    public UpdateResponse updateCatalog(UpdateRequest updateRequest) throws AuthenticationFault {
+    public final UpdateResponse updateCatalog(UpdateRequest updateRequest) throws AuthenticationFault {
 
         /**
          * Generates a response object.
@@ -68,29 +68,43 @@ public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transf
         for (SupplierProduct productSupplier : productList.getSupplierProduct()) {
             BOProduct product = productBOA.findByOrderNumberSupplier(productSupplier.getSupplierAID());
 
+            // Checks if product exists
             if (product != null) {
-                boolean hasLongDescriptionChanged = false;
-                hasLongDescriptionChanged = productSupplier.getLongDescription().equals(product.getLongDescription());
-                boolean hasShortDescriptionChanged = false;
-                hasShortDescriptionChanged = productSupplier.getShortDescription().equals(product.getShortDescription());
+                boolean hasLongDescriptionChanged = productSupplier.getLongDescription().equals(product.getLongDescription());
+                boolean hasShortDescriptionChanged = productSupplier.getShortDescription().equals(product.getShortDescription());
+
+                // Checks if the Long or Short description has changed
                 if ((!hasLongDescriptionChanged || !hasShortDescriptionChanged)) {
-                    updatedProducts.getSupplierProduct().add(productSupplier);
+                    updatedProducts.getSupplierProduct().add(genSupplierProduct(product));
                 } else {
                     //responseString ist gleich
                     responseString = "LongDescription or ShortDescription not changed :" + changedProduct++;
                 }
-
             } else {
+                // If product isn't available anymore.
                 responseString = "set supplier product to unvisible product: " + notChangedProuct++;
-                unavailableProducts.getSupplierProduct().add(productSupplier);
+                unavailableProducts.getSupplierProduct().add(genSupplierProduct(product));
             }
-
         }
 
+        // Response to WebService caller
         response.setListOfUnavailableProducts(unavailableProducts);
         response.setListOfUpdatedProducts(updatedProducts);
-
         return response;
+    }
+
+    /**
+     * Generates a product to be set.
+     *
+     * @param product BOProduct
+     * @return SupplierProduct
+     */
+    private SupplierProduct genSupplierProduct(final BOProduct product) {
+        SupplierProduct sP = new SupplierProduct();
+        sP.setLongDescription(product.getLongDescription());
+        sP.setShortDescription(product.getShortDescription());
+        sP.setSupplierAID(product.getSupplier().getSupplierNumber());
+        return sP;
     }
 
 }
