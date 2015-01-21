@@ -26,13 +26,13 @@
         <h1>updateCatalaog Webservice</h1>
         <p>Please select a supplier and start the process.</p>
         <form action="controllerservlet?action=UpdateCatalogWS" method="Post">
+
             <select name="<%=Constants.PARAM_SUPPLIER%>">
                 <c:forEach var="supplier" items="${sessionScope.supplierList}">
                     <jsp:useBean id="supplier" type="de.htwg_konstanz.ebus.framework.wholesaler.api.bo.BOSupplier" />
                     <option value="<%=supplier.getSupplierNumber()%>"><%=supplier.getCompanyname()%></option>
                 </c:forEach>
             </select>
-
             <input type="submit" value="start update"/>
         </form>
     </body>
