@@ -109,6 +109,8 @@ public class UpdateCatalogWS implements IAction {
                 System.out.println("Unavailable: " + res.getListOfUnavailableProducts().getSupplierProduct().size());
                 System.out.println("Updated: " + res.getListOfUpdatedProducts().getSupplierProduct().size());
 
+                return "updatecatalogresult.jsp?infomessage=" + res.getListOfUpdatedProducts().getSupplierProduct().size();
+
             } else {
                 // authorization failed -> show error message
                 errorList.add("You are not allowed to perform this action!");
@@ -119,7 +121,6 @@ public class UpdateCatalogWS implements IAction {
             // redirect to the login page
             return "login.jsp";
         }
-        return null;
     }
 
     @Override
