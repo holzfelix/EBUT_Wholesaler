@@ -12,9 +12,10 @@ import static de.htwg_konstanz.ebus.wholesaler.demo.ExportXML.PARAM_LOGIN_BEAN;
 import de.htwg_konstanz.ebus.wholesaler.demo.util.Constants;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.AuthenticationFault;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.ListOfProducts;
+import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.ObjectFactory;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.Price;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.SupplierProduct;
-import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateCatalogImpl;
+import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateCatalogWebService;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateRequest;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse;
 import java.math.BigDecimal;
@@ -37,11 +38,12 @@ public class UpdateCatalogWS implements IAction {
      * Collection of the Products.
      */
     private Collection<BOProduct> products;
-
     /**
      * Response from WS.
      */
     private UpdateResponse res;
+
+    private final ObjectFactory factory = new ObjectFactory();
 
     /**
      * Instance of the Product Business Object.
@@ -95,17 +97,16 @@ public class UpdateCatalogWS implements IAction {
 
                 System.out.println("Anzahl Produkte in productList " + productList.getSupplierProduct().size());
 
-                UpdateRequest updateRequest = new UpdateRequest();
+                res = factory.createUpdateResponse();
 
+                UpdateRequest updateRequest = factory.createUpdateRequest();
                 updateRequest.setListOfProducts(productList);
 
                 try {
-                    UpdateCatalogImpl test = new UpdateCatalogImpl();
-                    res = test.updateCatalog(updateRequest);
+                    res = new UpdateCatalogWebService().getUpdateCatalogPort().updateCatalog(updateRequest);
                 } catch (AuthenticationFault ex) {
                     Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
                 System.out.println("Unavailable: " + res.getListOfUnavailableProducts().getSupplierProduct().size());
                 System.out.println("Updated: " + res.getListOfUpdatedProducts().getSupplierProduct().size());
 

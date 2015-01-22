@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse fï¿½r anonymous complex type.
+ * <p>Java-Klasse für anonymous complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="authentication" type="{http://localhost:8084/EBUT_Wholesaler/updatecatalog}authentication"/>
- *         &lt;element name="listOfProducts" type="{http://localhost:8084/EBUT_Wholesaler/updatecatalog}listOfProducts"/>
+ *         &lt;element name="authentication" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}authentication"/>
+ *         &lt;element name="listOfProducts" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}listOfProducts"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

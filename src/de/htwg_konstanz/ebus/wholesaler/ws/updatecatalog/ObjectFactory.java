@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the de.htwg_konstanz.ebus.wholesaler.updatecatalog package. 
+ * generated in the de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -24,10 +24,10 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _FaultType_QNAME = new QName("http://localhost:8084/EBUT_Wholesaler/updatecatalog", "faultType");
+    private final static QName _FaultType_QNAME = new QName("http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", "faultType");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.htwg_konstanz.ebus.wholesaler.updatecatalog
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog
      * 
      */
     public ObjectFactory() {
@@ -101,7 +101,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://localhost:8084/EBUT_Wholesaler/updatecatalog", name = "faultType")
+    @XmlElementDecl(namespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", name = "faultType")
     public JAXBElement<String> createFaultType(String value) {
         return new JAXBElement<String>(_FaultType_QNAME, String.class, null, value);
     }
