@@ -20,7 +20,7 @@ import javax.xml.ws.WebServiceProvider;
  * @author Felix
  */
 @ServiceMode(value = javax.xml.ws.Service.Mode.PAYLOAD)
-@WebServiceProvider(serviceName = "UpdateCatalogWebService", portName = "updateCatalogPort", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog", wsdlLocation = "WEB-INF/wsdl/UpdateCatalogImpl/updateCatalogue.wsdl")
+@WebServiceProvider(serviceName = "UpdateCatalogWebService", portName = "updateCatalogPort", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", wsdlLocation = "WEB-INF/wsdl/UpdateCatalogImpl/updateCatalogue.wsdl")
 public class UpdateCatalogImpl implements javax.xml.ws.Provider<javax.xml.transform.Source>, UpdateCatalog {
 
     /**

@@ -7,12 +7,12 @@
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tns="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog"
-    targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog">
+    xmlns:tns="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService"
+    targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService">
 
 
     <wsdl:types>
-        <xs:schema targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+        <xs:schema targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
             <xs:element name="updateRequest">
                 <xs:complexType >
@@ -127,7 +127,7 @@
 
     <wsdl:service name="UpdateCatalogWebService">
         <wsdl:port name="updateCatalogPort" binding="tns:SingleBindingForTheInterfaceAbove">
-            <soap:address location="http://192.168.178.39:8084/EBUT_Wholesaler/updatecatalog"/>
+            <soap:address location="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService"/>
         </wsdl:port>
     </wsdl:service>
 
