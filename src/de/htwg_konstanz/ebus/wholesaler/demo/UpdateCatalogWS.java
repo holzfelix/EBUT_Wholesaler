@@ -109,6 +109,30 @@ public class UpdateCatalogWS implements IAction {
                 System.out.println("Unavailable: " + res.getListOfUnavailableProducts().getSupplierProduct().size());
                 System.out.println("Updated: " + res.getListOfUpdatedProducts().getSupplierProduct().size());
 
+                // Products Deletion
+                for (SupplierProduct p : res.getListOfUnavailableProducts().getSupplierProduct()) {
+                    List<BOProduct> b = productBOA.findByShortdescription(p.getShortDescription());
+                    for (BOProduct bop : b) {
+                        if (bop.getSupplier().getSupplierNumber().equals(p.getSupplierAID())) {
+                            productBOA.delete(bop);
+                        }
+                    }
+                }
+
+                // Update Products
+                for (SupplierProduct p : res.getListOfUpdatedProducts().getSupplierProduct()) {
+                    List<BOProduct> b = productBOA.findByShortdescription(p.getShortDescription());
+                    for (BOProduct bop : b) {
+                        if (bop.getSupplier().getSupplierNumber().equals(p.getSupplierAID())) {
+                            bop.setLongDescription(p.getLongDescription());
+                            bop.setLongDescriptionCustomer(p.getLongDescription());
+                            bop.setShortDescription(p.getShortDescription());
+                            bop.setShortDescriptionCustomer(p.getShortDescription());
+                            productBOA.saveOrUpdate(bop);
+                        }
+                    }
+                }
+
                 return "updatecatalogresult.jsp?infomessage=" + res.getListOfUpdatedProducts().getSupplierProduct().size();
 
             } else {
