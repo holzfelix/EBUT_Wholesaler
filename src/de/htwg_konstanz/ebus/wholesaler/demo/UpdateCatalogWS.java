@@ -97,9 +97,9 @@ public class UpdateCatalogWS implements IAction {
 
                 System.out.println("Anzahl Produkte in productList " + productList.getSupplierProduct().size());
 
-                res = new UpdateResponse();
+                res = factory.createUpdateResponse();
 
-                UpdateRequest updateRequest = new UpdateRequest();
+                UpdateRequest updateRequest = factory.createUpdateRequest();
                 updateRequest.setListOfProducts(productList);
 
                 try {

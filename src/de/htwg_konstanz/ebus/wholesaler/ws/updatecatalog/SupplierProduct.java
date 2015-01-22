@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="supplierAID" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="shortDescription" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="longDescription" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="price" type="{http://localhost:8084/EBUT_Wholesaler/updatecatalog}price" maxOccurs="unbounded"/>
+ *         &lt;element name="price" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}price" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
