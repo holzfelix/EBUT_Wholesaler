@@ -20,6 +20,8 @@ import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateRequest;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -97,13 +99,27 @@ public class UpdateCatalogWS implements IAction {
 
                 System.out.println("Anzahl Produkte in productList " + productList.getSupplierProduct().size());
 
-                res = factory.createUpdateResponse();
+                //res = factory.createUpdateResponse();
+                res = new UpdateResponse();
 
-                UpdateRequest updateRequest = factory.createUpdateRequest();
+                UpdateCatalogWebService service = null;
+
+                try {
+                    service = new UpdateCatalogWebService(new URL("http://192.168.178.39:8084/EBUT_Wholesaler/wsdl/updateCatalogue.wsdl"));
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                UpdateCatalog u = (UpdateCatalog) service.getUpdateCatalogPort();
+
+                UpdateRequest updateRequest = new UpdateRequest();
                 updateRequest.setListOfProducts(productList);
 
                 try {
-                    res = new UpdateCatalogWebService().getUpdateCatalogPort().updateCatalog(updateRequest);
+                    service.getUpdateCatalogPort().updateCatalog(updateRequest);
+                    //res = new UpdateCatalogWebService().getUpdateCatalogPort().updateCatalog(updateRequest);
+                    //res = new UpdateCatalogImpl().updateCatalog(updateRequest);
+
                 } catch (AuthenticationFault ex) {
                     Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
                 }
