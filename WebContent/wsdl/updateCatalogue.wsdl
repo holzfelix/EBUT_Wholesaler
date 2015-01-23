@@ -111,7 +111,7 @@
     <wsdl:binding name="SingleBindingForTheInterfaceAbove" type="tns:UpdateCatalog">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="updateCatalog">
-            <soap:operation soapAction="urn:#updateCatalog"/>
+            <soap:operation soapAction="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService/updateCatalog"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>

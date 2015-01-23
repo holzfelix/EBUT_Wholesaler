@@ -20,8 +20,6 @@ import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateRequest;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -102,27 +100,20 @@ public class UpdateCatalogWS implements IAction {
                 //res = factory.createUpdateResponse();
                 res = new UpdateResponse();
 
-                UpdateCatalogWebService service = null;
+                UpdateRequest req = new UpdateRequest();
+                req.setListOfProducts(productList);
 
                 try {
-                    service = new UpdateCatalogWebService(new URL("http://192.168.178.39:8084/EBUT_Wholesaler/wsdl/updateCatalogue.wsdl"));
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                UpdateCatalog u = (UpdateCatalog) service.getUpdateCatalogPort();
-
-                UpdateRequest updateRequest = new UpdateRequest();
-                updateRequest.setListOfProducts(productList);
-
-                try {
-                    service.getUpdateCatalogPort().updateCatalog(updateRequest);
-                    //res = new UpdateCatalogWebService().getUpdateCatalogPort().updateCatalog(updateRequest);
-                    //res = new UpdateCatalogImpl().updateCatalog(updateRequest);
-
+                    res = new UpdateCatalogWebService().getUpdateCatalogPort().updateCatalog(req);
                 } catch (AuthenticationFault ex) {
                     Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
+//                QName qname = new QName("http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", "UpdateCatalogWebService");
+//                UpdateCatalogWebService service = new UpdateCatalogWebService(null, qname);
+//                UpdateCatalog port = service.getUpdateCatalogPort();
+//                BindingProvider bindingProvider = (BindingProvider) port;
+//                bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService?wsdl");
                 System.out.println("Unavailable: " + res.getListOfUnavailableProducts().getSupplierProduct().size());
                 System.out.println("Updated: " + res.getListOfUpdatedProducts().getSupplierProduct().size());
 
