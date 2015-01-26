@@ -30,7 +30,7 @@ public interface UpdateCatalog {
      *     returns de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse
      * @throws AuthenticationFault
      */
-    @WebMethod(action = "urn:#updateCatalog")
+    @WebMethod(action = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService/updateCatalog")
     @WebResult(name = "updateResponse", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", partName = "updateResponse")
     public UpdateResponse updateCatalog(
         @WebParam(name = "updateRequest", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", partName = "updateRequest")

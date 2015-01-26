@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Felix
  */
-public class UpdateCatalog implements IAction {
+public class UpdateCatalogAction implements IAction {
 
     /**
      * Collection of the Products.

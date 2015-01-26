@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/C:/Users/Felix/Dropbox/Studium/WIN/Semester_6/EBUT/Übung/EBUT_Wholesaler/WebContent/wsdl/updateCatalogue.wsdl" uri="src/conf/xml-resources/web-services/UpdateCatalogImpl/wsdl/updateCatalogue.wsdl"/>
+    <system systemId="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService?wsdl" uri="src/conf/xml-resources/web-service-references/UpdateCatalogWebService/wsdl/192.168.178.39_8084/EBUT_Wholesaler/UpdateCatalogWebService.wsdl"/>
 </catalog>

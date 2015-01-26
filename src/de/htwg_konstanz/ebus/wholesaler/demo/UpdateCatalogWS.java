@@ -15,6 +15,7 @@ import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.ListOfProducts;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.ObjectFactory;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.Price;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.SupplierProduct;
+import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateCatalog;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateCatalogWebService;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateRequest;
 import de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse;
@@ -103,8 +104,11 @@ public class UpdateCatalogWS implements IAction {
                 UpdateRequest req = new UpdateRequest();
                 req.setListOfProducts(productList);
 
+                UpdateCatalogWebService service = new UpdateCatalogWebService();
+
                 try {
-                    res = new UpdateCatalogWebService().getUpdateCatalogPort().updateCatalog(req);
+                    UpdateCatalog port = service.getUpdateCatalogPort();
+                    res = port.updateCatalog(req);
                 } catch (AuthenticationFault ex) {
                     Logger.getLogger(UpdateCatalogWS.class.getName()).log(Level.SEVERE, null, ex);
                 }
