@@ -24,7 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _FaultType_QNAME = new QName("http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", "faultType");
+    private final static QName _FaultType_QNAME = new QName("http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService", "faultType");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog
@@ -101,7 +101,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", name = "faultType")
+    @XmlElementDecl(namespace = "http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService", name = "faultType")
     public JAXBElement<String> createFaultType(String value) {
         return new JAXBElement<String>(_FaultType_QNAME, String.class, null, value);
     }

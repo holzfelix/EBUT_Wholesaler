@@ -18,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="authentication" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}authentication"/>
- *         &lt;element name="listOfProducts" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}listOfProducts"/>
+ *         &lt;element name="authentication" type="{http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService}authentication"/>
+ *         &lt;element name="listOfProducts" type="{http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService}listOfProducts"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

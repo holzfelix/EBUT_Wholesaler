@@ -10,7 +10,7 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.2
  * 
  */
-@WebFault(name = "faultType", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService")
+@WebFault(name = "faultType", targetNamespace = "http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService")
 public class AuthenticationFault
     extends Exception
 {

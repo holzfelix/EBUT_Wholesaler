@@ -21,8 +21,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="updateDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *         &lt;element name="listOfUpdatedProducts" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}listOfUpdatedProducts"/>
- *         &lt;element name="listOfUnavailableProducts" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}listOfUnavailableProducts"/>
+ *         &lt;element name="listOfUpdatedProducts" type="{http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService}listOfUpdatedProducts"/>
+ *         &lt;element name="listOfUnavailableProducts" type="{http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService}listOfUnavailableProducts"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
