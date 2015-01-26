@@ -2,4 +2,5 @@
 <endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
   <endpoint implementation="de.htwg_konstanz.ebus.wholesaler.ws.order.OrderServiceImpl" interface="de.htwg_konstanz.ebus.wholesaler.ws.order.OrderServicePortType" name="OrderService" url-pattern="/OrderService"/>
   <endpoint implementation="de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateCatalogImpl" name="UpdateCatalogWebService" url-pattern="/UpdateCatalogWebService"/>
+  <endpoint implementation="de.htwg_konstanz.ebus.wholesaler.ws.order.OrderServiceImpl" name="OrderServiceImpl" url-pattern="/OrderServiceImpl"/>
 </endpoints>

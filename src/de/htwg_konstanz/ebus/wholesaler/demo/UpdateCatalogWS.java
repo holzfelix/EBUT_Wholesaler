@@ -145,7 +145,7 @@ public class UpdateCatalogWS implements IAction {
                     }
                 }
 
-                return "updatecatalogresult.jsp?infomessage=" + res.getListOfUpdatedProducts().getSupplierProduct().size();
+                return "updatecatalogresult.jsp?updatedproducts=" + res.getListOfUpdatedProducts().getSupplierProduct().size() + "&deletdproducts=" + res.getListOfUnavailableProducts().getSupplierProduct().size();
 
             } else {
                 // authorization failed -> show error message

@@ -26,6 +26,11 @@
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>OrderServiceImpl</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controllerservlet</servlet-name>
         <url-pattern>/cs</url-pattern>
@@ -53,6 +58,10 @@
     <servlet-mapping>
         <servlet-name>UpdateCatalogWebService</servlet-name>
         <url-pattern>/UpdateCatalogWebService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderServiceImpl</servlet-name>
+        <url-pattern>/OrderServiceImpl</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>

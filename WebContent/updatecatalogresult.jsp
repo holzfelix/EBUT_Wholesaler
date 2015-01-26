@@ -24,7 +24,8 @@
         <%@ include file="navigation.jspfragment" %>
 
         <h1>updateCatalaog Webservice</h1>
-        <p><%= request.getParameter("infomessage")%> </p>
+        <p>Upgedated Products: <%= request.getParameter("updatedproducts")%> </p>
+        <p>Deleted Products: <%= request.getParameter("deletdproducts")%> </p>
 
     </body>
 </html>
