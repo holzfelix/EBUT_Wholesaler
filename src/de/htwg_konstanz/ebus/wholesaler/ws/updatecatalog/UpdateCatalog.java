@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "UpdateCatalog", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService")
+@WebService(name = "UpdateCatalog", targetNamespace = "http://localhost:8084/EBUT_Wholesaler/updatecatalog")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -30,10 +30,10 @@ public interface UpdateCatalog {
      *     returns de.htwg_konstanz.ebus.wholesaler.ws.updatecatalog.UpdateResponse
      * @throws AuthenticationFault
      */
-    @WebMethod(action = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService/updateCatalog")
-    @WebResult(name = "updateResponse", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", partName = "updateResponse")
+    @WebMethod(action = "urn:#updateCatalog")
+    @WebResult(name = "updateResponse", targetNamespace = "http://localhost:8084/EBUT_Wholesaler/updatecatalog", partName = "updateResponse")
     public UpdateResponse updateCatalog(
-        @WebParam(name = "updateRequest", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", partName = "updateRequest")
+        @WebParam(name = "updateRequest", targetNamespace = "http://localhost:8084/EBUT_Wholesaler/updatecatalog", partName = "updateRequest")
         UpdateRequest updateRequest)
         throws AuthenticationFault
     ;

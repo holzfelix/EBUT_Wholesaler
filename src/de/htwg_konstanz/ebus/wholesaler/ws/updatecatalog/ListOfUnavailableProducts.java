@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="supplierProduct" type="{http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService}supplierProduct" maxOccurs="unbounded"/>
+ *         &lt;element name="supplierProduct" type="{http://localhost:8084/EBUT_Wholesaler/updatecatalog}supplierProduct" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

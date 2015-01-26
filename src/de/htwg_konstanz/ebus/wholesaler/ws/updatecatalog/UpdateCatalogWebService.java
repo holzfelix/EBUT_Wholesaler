@@ -17,20 +17,20 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "UpdateCatalogWebService", targetNamespace = "http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", wsdlLocation = "http://192.168.178.39:8084/EBUT_Wholesaler/wsdl/updateCatalogue.wsdl")
+@WebServiceClient(name = "UpdateCatalogWebService", targetNamespace = "http://localhost:8084/EBUT_Wholesaler/updatecatalog", wsdlLocation = "http://localhost:8084/EBUT_Wholesaler/UpdateCatalogWebService?wsdl")
 public class UpdateCatalogWebService
     extends Service
 {
 
     private final static URL UPDATECATALOGWEBSERVICE_WSDL_LOCATION;
     private final static WebServiceException UPDATECATALOGWEBSERVICE_EXCEPTION;
-    private final static QName UPDATECATALOGWEBSERVICE_QNAME = new QName("http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", "UpdateCatalogWebService");
+    private final static QName UPDATECATALOGWEBSERVICE_QNAME = new QName("http://localhost:8084/EBUT_Wholesaler/updatecatalog", "UpdateCatalogWebService");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://192.168.178.39:8084/EBUT_Wholesaler/wsdl/updateCatalogue.wsdl");
+            url = new URL("http://localhost:8084/EBUT_Wholesaler/UpdateCatalogWebService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -69,7 +69,7 @@ public class UpdateCatalogWebService
      */
     @WebEndpoint(name = "updateCatalogPort")
     public UpdateCatalog getUpdateCatalogPort() {
-        return super.getPort(new QName("http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", "updateCatalogPort"), UpdateCatalog.class);
+        return super.getPort(new QName("http://localhost:8084/EBUT_Wholesaler/updatecatalog", "updateCatalogPort"), UpdateCatalog.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class UpdateCatalogWebService
      */
     @WebEndpoint(name = "updateCatalogPort")
     public UpdateCatalog getUpdateCatalogPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService", "updateCatalogPort"), UpdateCatalog.class, features);
+        return super.getPort(new QName("http://localhost:8084/EBUT_Wholesaler/updatecatalog", "updateCatalogPort"), UpdateCatalog.class, features);
     }
 
     private static URL __getWsdlLocation() {

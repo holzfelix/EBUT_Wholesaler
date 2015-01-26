@@ -7,12 +7,12 @@
     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tns="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService"
-    targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService">
+    xmlns:tns="http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService"
+    targetNamespace="http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService">
 
 
     <wsdl:types>
-        <xs:schema targetNamespace="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+        <xs:schema targetNamespace="http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
             <xs:element name="updateRequest">
                 <xs:complexType >
@@ -111,7 +111,7 @@
     <wsdl:binding name="SingleBindingForTheInterfaceAbove" type="tns:UpdateCatalog">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="updateCatalog">
-            <soap:operation soapAction="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService/updateCatalog"/>
+            <soap:operation soapAction="http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService/updateCatalog"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -127,7 +127,7 @@
 
     <wsdl:service name="UpdateCatalogWebService">
         <wsdl:port name="updateCatalogPort" binding="tns:SingleBindingForTheInterfaceAbove">
-            <soap:address location="http://192.168.178.39:8084/EBUT_Wholesaler/UpdateCatalogWebService"/>
+            <soap:address location="http://localhost:8084/EBUT_Wholesaler_Zweite_Instanz/UpdateCatalogWebService"/>
         </wsdl:port>
     </wsdl:service>
 
